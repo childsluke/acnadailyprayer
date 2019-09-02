@@ -10,21 +10,29 @@ namespace ACNADailyPrayer
 {
     class ServiceDate
     {
-        int date;
-        string month;
-        string weekday;
+        public int date;
+        public string month;
+        public string weekday;
+        public string year;
 
         public string firstReading;
         public string secondReading;
-        public int[] psalmsOfTheDay;
+        public List<int> psalmsOfTheDay;
         public Collect collectOfTheDay;
         public string commemorations;
 
-        public ServiceDate()
+        public ServiceDate(string dateIn)
         {
+            string[] dateElements = dateIn.Split(' ');
+            weekday = dateElements[0];
+            month = dateElements[1];
+            date = int.Parse(dateElements[2]);
+            month = dateElements[3];
+
             firstReading = ""; secondReading = "";
             collectOfTheDay = new Collect();
-            psalmsOfTheDay = new int[1]; psalmsOfTheDay[0] = 1;
+            psalmsOfTheDay = new List<int>();
+            //psalmsOfTheDay.Add(102); psalmsOfTheDay.Add(103); psalmsOfTheDay.Add(104);
         }
     }
 
@@ -86,18 +94,58 @@ namespace ACNADailyPrayer
         {
             serviceType = officeTypeIn;
             serviceText = new List<String>();
-            date = new ServiceDate();
+            date = new ServiceDate(fullDate);
+
+            readDailyPsalmsFromFile(@".\lectionary\psalmcycletabdelim");
 
             PrepareServiceText();
+        }
+
+        private void readDailyPsalmsFromFile(string lectionaryFile)
+        {
+            // Check today's date against lectionary file & write psalm numbers to variable ready for pulling text from source (ESV API or BCP 2019 Psalter)
+ 
+
+            // Read in tab delimited file:
+
+            StreamReader sReader = new StreamReader(@".\lectionary\psalmcycletabdelim");
+            char delimiter = '\t';
+
+            int dateToPull = date.date;
+
+            // 30-day psalm cycle - AVOID the 31st breaking it!
+            if (dateToPull == 31)
+            {
+                dateToPull = 30;
+            }
+            
+            while (!sReader.EndOfStream)
+            {
+                string currentLine = sReader.ReadLine();
+                string [] currentLineSplit = currentLine.Split(delimiter);
+
+                // Don't waste processing on a different date, just go to the next line
+                if (currentLineSplit[0] != dateToPull.ToString()) continue;
+
+                // Feed morning or evening psalms into service text variable
+                string[] psalmsToFeedIn = new string[0];
+                if (serviceType == Office.MorningPrayer) psalmsToFeedIn = currentLineSplit[1].Split(',');
+                else if (serviceType == Office.EveningPrayer) psalmsToFeedIn = currentLineSplit[2].Split(',');
+
+                foreach(string psalmNumber in psalmsToFeedIn)
+                {
+                    date.psalmsOfTheDay.Add(int.Parse(psalmNumber));
+                }
+            }
         }
 
         private string getDailyPsalms()
         {
             string psalmsString = "";
 
-            for(int i = 0; i < date.psalmsOfTheDay.Length; i++)
+            foreach(int psalmNumber in date.psalmsOfTheDay)
             {
-               psalmsString += Service.GetReading("Psalm " + date.psalmsOfTheDay[i].ToString());
+               psalmsString += "\n\n" + Service.GetReading("Psalm " + psalmNumber.ToString());
             }
 
             return psalmsString;
