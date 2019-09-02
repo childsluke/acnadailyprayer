@@ -14,17 +14,29 @@ namespace ACNADailyPrayer
         string month;
         string weekday;
 
-        string firstReading;
-        string SecondReading;
-        int[] psalmsOfTheDay;
-        Collect collectOfTheDay;
-        string commemorations;
+        public string firstReading;
+        public string secondReading;
+        public int[] psalmsOfTheDay;
+        public Collect collectOfTheDay;
+        public string commemorations;
+
+        public ServiceDate()
+        {
+            firstReading = ""; secondReading = "";
+            collectOfTheDay = new Collect();
+            psalmsOfTheDay = new int[1]; psalmsOfTheDay[0] = 1;
+        }
     }
 
     class Collect
     {
-        string collectText;
-        string collectTitle;
+       public string collectText;
+       public string collectTitle;
+
+        public Collect()
+        {
+            collectText = ""; collectTitle = "";
+        }
     }
 
     public class Service
@@ -74,20 +86,27 @@ namespace ACNADailyPrayer
         {
             serviceType = officeTypeIn;
             serviceText = new List<String>();
+            date = new ServiceDate();
+
             PrepareServiceText();
         }
 
         private string getDailyPsalms()
         {
-            return "";
+            string psalmsString = "";
+
+            for(int i = 0; i < date.psalmsOfTheDay.Length; i++)
+            {
+               psalmsString += Service.GetReading("Psalm " + date.psalmsOfTheDay[i].ToString());
+            }
+
+            return psalmsString;
         }
 
         private void PrepareServiceText()
         {
-            // Read in invitatory to begin both offices...
             serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\invitatory"));
 
-            // Then the Venite before the psalms (or the Phos Hilaron if Evening Prayer)
             if (serviceType == Office.MorningPrayer)
                 serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\venite"));
                     else if (serviceType == Office.EveningPrayer)
@@ -96,25 +115,47 @@ namespace ACNADailyPrayer
 
             serviceText.Add(getDailyPsalms());
 
-            // Add the first reading
+            if(date.firstReading != "") serviceText.Add(date.firstReading);
 
-            // If Morning Prayer, add the Te Deum, or if Evening Prayer add the Magnificat
+            if (serviceType == Office.MorningPrayer)
+                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\tedeum"));
+            else if (serviceType == Office.EveningPrayer)
+                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\magnificat"));
 
-            // Add the second reading
+                if(date.secondReading != "") serviceText.Add(date.secondReading);
 
-            // If Morning Prayer, add the Benedictus, or if Evening Prayer add the Nunc Dimittis
+            if (serviceType == Office.MorningPrayer)
+                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\benedictus"));
+            else if (serviceType == Office.EveningPrayer)
+                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\nuncdimittis"));
 
-            // Add the Apostle's Creed
+            serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\apostlescreed"));
 
-            // Add the Kyrie, Our Father, Suffrages
+            serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\kyrieourfathersuffrages"));
 
-            // Add the Collect of the Day
+            serviceText.Add(date.collectOfTheDay.collectText);
 
-            // Add the two additional collects depending on Morning or Evening Prayer
+            if (serviceType == Office.MorningPrayer)
+            {
+                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\collectforpeacemorning"));
+                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\collectforgrace"));
 
-            // Add the General Thanksgiving and the Prayer of St. Chrysostom
 
-            // Add the Grace
+            }
+            else if (serviceType == Office.EveningPrayer)
+            {
+                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\collectforpeaceevening"));
+                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\collectforaidagainstperils"));
+
+
+            }
+
+            serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\prayerformission"));
+
+
+            serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\generalthanksgiving"));
+
+            serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\thegrace"));
 
         }
     }
