@@ -13,7 +13,7 @@ namespace ACNADailyPrayer
         public int date;
         public string month;
         public string weekday;
-        public string year;
+        public int year;
 
         public string [] readings;
         public List<int> psalmsOfTheDay;
@@ -24,9 +24,9 @@ namespace ACNADailyPrayer
         {
             string[] dateElements = dateIn.Split(' ');
             weekday = dateElements[0];
-            month = dateElements[1];
             date = int.Parse(dateElements[2]);
-            month = dateElements[3];
+            month = dateElements[1];
+            year = int.Parse(dateElements[3]);
 
             readings = new string[2];
             collectOfTheDay = new Collect();
@@ -96,11 +96,12 @@ namespace ACNADailyPrayer
             date = new ServiceDate(fullDate);
 
             readDailyPsalmsFromFile(@".\lectionary\psalmcycletabdelim");
+            if (serviceType != Office.Compline) readDailyReadings("_lectionary");
 
             PrepareServiceText();
         }
 
-        private List<string> readDailyReadings(string filenameAppend)
+        private void readDailyReadings(string filenameAppend)
         {
             // This function takes  a file name append and combines with the specified month (e.g. "January_lectionary"), and then reads the Bible readings in tab-delimited format,
             // then returns a list of bible reference as a string to plug into another API for the actual reading text
@@ -118,11 +119,10 @@ namespace ACNADailyPrayer
                 if (currentLineSplit[0] != date.date.ToString()) continue;
 
                 // Otherwise, parse out the readings and put them into our string List to return
-                if (serviceType == Office.MorningPrayer) date.readings = currentLineSplit[1].Split(',');
-                else if (serviceType == Office.EveningPrayer) date.readings = currentLineSplit[2].Split(',');
+                if (serviceType == Office.MorningPrayer) { date.readings = currentLineSplit[1].Split(','); break; }
+                else if (serviceType == Office.EveningPrayer) { date.readings = currentLineSplit[2].Split(','); break; }
             }
 
-            return new List<string>();
         }
 
         private void readDailyPsalmsFromFile(string lectionaryFile)
