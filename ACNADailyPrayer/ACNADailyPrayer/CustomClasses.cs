@@ -15,8 +15,7 @@ namespace ACNADailyPrayer
         public string weekday;
         public string year;
 
-        public string firstReading;
-        public string secondReading;
+        public string [] readings;
         public List<int> psalmsOfTheDay;
         public Collect collectOfTheDay;
         public string commemorations;
@@ -29,7 +28,7 @@ namespace ACNADailyPrayer
             date = int.Parse(dateElements[2]);
             month = dateElements[3];
 
-            firstReading = ""; secondReading = "";
+            readings = new string[2];
             collectOfTheDay = new Collect();
             psalmsOfTheDay = new List<int>();
             //psalmsOfTheDay.Add(102); psalmsOfTheDay.Add(103); psalmsOfTheDay.Add(104);
@@ -93,12 +92,37 @@ namespace ACNADailyPrayer
         public Service(Office officeTypeIn, string fullDate)
         {
             serviceType = officeTypeIn;
-            serviceText = new List<String>();
+            serviceText = new List<string>();
             date = new ServiceDate(fullDate);
 
             readDailyPsalmsFromFile(@".\lectionary\psalmcycletabdelim");
 
             PrepareServiceText();
+        }
+
+        private List<string> readDailyReadings(string filenameAppend)
+        {
+            // This function takes  a file name append and combines with the specified month (e.g. "January_lectionary"), and then reads the Bible readings in tab-delimited format,
+            // then returns a list of bible reference as a string to plug into another API for the actual reading text
+
+            char delimiter = '\t';
+            StreamReader sReader = new StreamReader(@".\lectionary\" + date.month + filenameAppend);
+
+            while (!sReader.EndOfStream)
+            {
+                // Do processing here
+                string currentLine = sReader.ReadLine();
+                string[] currentLineSplit = currentLine.Split(delimiter);
+
+                // Don't waste processing on a different date, just go to the next line
+                if (currentLineSplit[0] != date.date.ToString()) continue;
+
+                // Otherwise, parse out the readings and put them into our string List to return
+                if (serviceType == Office.MorningPrayer) date.readings = currentLineSplit[1].Split(',');
+                else if (serviceType == Office.EveningPrayer) date.readings = currentLineSplit[2].Split(',');
+            }
+
+            return new List<string>();
         }
 
         private void readDailyPsalmsFromFile(string lectionaryFile)
@@ -108,7 +132,7 @@ namespace ACNADailyPrayer
 
             // Read in tab delimited file:
 
-            StreamReader sReader = new StreamReader(@".\lectionary\psalmcycletabdelim");
+            StreamReader sReader = new StreamReader(lectionaryFile);
             char delimiter = '\t';
 
             int dateToPull = date.date;
@@ -163,14 +187,14 @@ namespace ACNADailyPrayer
 
             serviceText.Add(getDailyPsalms());
 
-            if(date.firstReading != "") serviceText.Add(date.firstReading);
+            if ((date.readings[0] != "") && (serviceType != Office.Compline))  serviceText.Add(Service.GetReading(date.readings[0]));
 
             if (serviceType == Office.MorningPrayer)
                 serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\tedeum"));
             else if (serviceType == Office.EveningPrayer)
                 serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\magnificat"));
 
-                if(date.secondReading != "") serviceText.Add(date.secondReading);
+            if((date.readings[1] != "") && (serviceType != Office.Compline)) serviceText.Add(Service.GetReading(date.readings[1]));
 
             if (serviceType == Office.MorningPrayer)
                 serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\benedictus"));
