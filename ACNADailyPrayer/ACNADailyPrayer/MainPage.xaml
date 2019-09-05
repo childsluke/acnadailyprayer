@@ -8,10 +8,22 @@
 
     <StackLayout>
         <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
+
+
+        <Image Source="http://www.anglicanchurch.net/img/acna-header-logo.png"
+               HeightRequest = "300"/>
+        <Label Text="Daily Prayer" 
            HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-        <Button Text="Click Me" Clicked="Handle_Clicked" />
+           VerticalOptions="CenterAndExpand"
+               FontSize="Title"/>
+        <Grid>
+         
+            <Button Grid.Column ="1"
+                Text="Morning Prayer" Clicked="Handle_Clicked" />
+            <Button Grid.Column ="0"
+                Text="Evening Prayer" Clicked="Handle_Clicked" />
+        </Grid>
+
     </StackLayout>
 
 </ContentPage>
