@@ -23,11 +23,14 @@ namespace ACNADailyPrayer
 
         }
 
-        int count = 0;
-        void Handle_Clicked(object sender, System.EventArgs e)
+
+        void MorningPrayer_Clicked(object sender, System.EventArgs e)
         {
-            count++;
-            ((Button)sender).Text = $"You clicked {count} times.";
+            //Navigation.PushAsync(new Page1( new Service(Service.Office.MorningPrayer, "Thursday September 12 2019") ) );
+        }
+        void EveningPrayer_Clicked(object sender, System.EventArgs e)
+        {
+
         }
 
     }

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Text;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Xamarin;
+using Xamarin.Forms;
 
 namespace ACNADailyPrayer
 {
@@ -26,9 +29,8 @@ namespace ACNADailyPrayer
             weekday = dateElements[0];
             month = dateElements[1];
             date = int.Parse(dateElements[2]);
-            month = dateElements[3];
+            year = dateElements[3];
 
-            readings = new string[2];
             collectOfTheDay = new Collect();
             psalmsOfTheDay = new List<int>();
             //psalmsOfTheDay.Add(102); psalmsOfTheDay.Add(103); psalmsOfTheDay.Add(104);
@@ -73,7 +75,10 @@ namespace ACNADailyPrayer
         {
             string readString = "";
 
-            StreamReader sReader = new StreamReader(filePath);
+            var assembly = typeof(App).GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream(filePath);
+
+            StreamReader sReader = new StreamReader(stream);
             while (!sReader.EndOfStream) readString += sReader.ReadLine() + "\n";
 
                  return readString;
@@ -95,18 +100,22 @@ namespace ACNADailyPrayer
             serviceText = new List<string>();
             date = new ServiceDate(fullDate);
 
-            readDailyPsalmsFromFile(@".\lectionary\psalmcycletabdelim");
+            readDailyPsalmsFromFile(@"ACNADailyPrayer.lectionary.psalmcycletabdelim");
+            readDailyReadings();
 
             PrepareServiceText();
         }
 
-        private List<string> readDailyReadings(string filenameAppend)
+        private void readDailyReadings()
         {
-            // This function takes  a file name append and combines with the specified month (e.g. "January_lectionary"), and then reads the Bible readings in tab-delimited format,
+            // This function takes read the specified month file (e.g. "January_lectionary"), and then reads the Bible readings in tab-delimited format,
             // then returns a list of bible reference as a string to plug into another API for the actual reading text
 
+            var assembly = typeof(App).GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream(@"ACNADailyPrayer.lectionary." + date.month + "_lectionary");
+
             char delimiter = '\t';
-            StreamReader sReader = new StreamReader(@".\lectionary\" + date.month + filenameAppend);
+            StreamReader sReader = new StreamReader(stream);
 
             while (!sReader.EndOfStream)
             {
@@ -122,17 +131,18 @@ namespace ACNADailyPrayer
                 else if (serviceType == Office.EveningPrayer) date.readings = currentLineSplit[2].Split(',');
             }
 
-            return new List<string>();
+            return;
         }
 
         private void readDailyPsalmsFromFile(string lectionaryFile)
         {
             // Check today's date against lectionary file & write psalm numbers to variable ready for pulling text from source (ESV API or BCP 2019 Psalter)
- 
+
+            var assembly = typeof(App).GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream(lectionaryFile);
 
             // Read in tab delimited file:
-
-            StreamReader sReader = new StreamReader(lectionaryFile);
+            StreamReader sReader = new StreamReader(stream);
             char delimiter = '\t';
 
             int dateToPull = date.date;
@@ -177,12 +187,12 @@ namespace ACNADailyPrayer
 
         private void PrepareServiceText()
         {
-            serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\invitatory"));
+            serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.invitatory"));
 
             if (serviceType == Office.MorningPrayer)
-                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\venite"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.venite"));
                     else if (serviceType == Office.EveningPrayer)
-                        serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\phoshilaron"));
+                        serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.phoshilaron"));
 
 
             serviceText.Add(getDailyPsalms());
@@ -190,44 +200,44 @@ namespace ACNADailyPrayer
             if ((date.readings[0] != "") && (serviceType != Office.Compline))  serviceText.Add(Service.GetReading(date.readings[0]));
 
             if (serviceType == Office.MorningPrayer)
-                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\tedeum"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.tedeum"));
             else if (serviceType == Office.EveningPrayer)
-                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\magnificat"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.magnificat"));
 
             if((date.readings[1] != "") && (serviceType != Office.Compline)) serviceText.Add(Service.GetReading(date.readings[1]));
 
             if (serviceType == Office.MorningPrayer)
-                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\benedictus"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.benedictus"));
             else if (serviceType == Office.EveningPrayer)
-                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\nuncdimittis"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.nuncdimittis"));
 
-            serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\apostlescreed"));
+            serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.apostlescreed"));
 
-            serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\kyrieourfathersuffrages"));
+            serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.kyrieourfathersuffrages"));
 
             serviceText.Add(date.collectOfTheDay.collectText);
 
             if (serviceType == Office.MorningPrayer)
             {
-                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\collectforpeacemorning"));
-                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\collectforgrace"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforpeacemorning"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforgrace"));
 
 
             }
             else if (serviceType == Office.EveningPrayer)
             {
-                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\collectforpeaceevening"));
-                serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\collectforaidagainstperils"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforpeaceevening"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforaidagainstperils"));
 
 
             }
 
-            serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\prayerformission"));
+            serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.prayerformission"));
 
 
-            serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\generalthanksgiving"));
+            serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.generalthanksgiving"));
 
-            serviceText.Add(ReadServiceElementFromFile(@".\servicetexts\thegrace"));
+            serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.thegrace"));
 
         }
     }

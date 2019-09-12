@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+            ios:Page.UseSafeArea="true"
              mc:Ignorable="d"
              x:Class="ACNADailyPrayer.MainPage">
 
@@ -11,17 +13,18 @@
 
 
         <Image Source="http://www.anglicanchurch.net/img/acna-header-logo.png"
-               HeightRequest = "300"/>
+               HeightRequest = "100"/>
         <Label Text="Daily Prayer" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand"
+               TextColor="Black"
                FontSize="Title"/>
-        <Grid>
+        <Grid HorizontalOptions="End">
          
             <Button Grid.Column ="1"
-                Text="Morning Prayer" Clicked="Handle_Clicked" />
+                Text="Morning Prayer" Clicked="MorningPrayer_Clicked" />
             <Button Grid.Column ="0"
-                Text="Evening Prayer" Clicked="Handle_Clicked" />
+                Text="Evening Prayer" Clicked="EveningPrayer_Clicked" />
         </Grid>
 
     </StackLayout>
