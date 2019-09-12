@@ -9,8 +9,7 @@ namespace ACNADailyPrayer
     {
         static void Main(string[] args)
         {
-
-            ACNADailyPrayer.Service testService;
+            ACNADailyPrayer.Service testService = new Service(Service.Office.EveningPrayer, "Monday January 1 1900");
 
             Console.Write("Please enter a date in the format Weekday MonthName DD YYYY: ");
             string dateToTest = Console.ReadLine();
@@ -22,13 +21,11 @@ namespace ACNADailyPrayer
             {
                 case "M":
                     testService = new Service(Service.Office.MorningPrayer, dateToTest);
-                    Console.Write(string.Join("\n", testService.serviceText.ToArray()));
                     break;
 
 
                 case "E":
                     testService = new Service(Service.Office.EveningPrayer, dateToTest);
-                    Console.Write(string.Join("\n", testService.serviceText.ToArray()));
                     break;
 
                 default:
@@ -40,7 +37,7 @@ namespace ACNADailyPrayer
 
 
             //Console.Write(ACNADailyPrayer.Service.GetReading("Psalm 5"));
-            
+            Console.Write(string.Join("\n", testService.serviceText.ToArray()));
 
             Console.Read();
             
