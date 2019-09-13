@@ -26,6 +26,7 @@ namespace ACNADailyPrayer
 
         void MorningPrayer_Clicked(object sender, System.EventArgs e)
         {
+            // TODO: A working alternative to this...
             //Navigation.PushAsync(new Page1( new Service(Service.Office.MorningPrayer, "Thursday September 12 2019") ) );
         }
         void EveningPrayer_Clicked(object sender, System.EventArgs e)
