@@ -40,6 +40,10 @@ namespace ACNADailyPrayer
         {
             Navigation.PushAsync(new Page1(new Service(Service.Office.EveningPrayer, getDate() ) ));
         }
+        void DateSelected(object sender, DateChangedEventArgs e)
+        {
+            dateChoice = e.NewDate;
+        }
 
     }
 }

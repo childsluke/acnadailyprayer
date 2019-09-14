@@ -35,7 +35,7 @@
             <Label Grid.Column="1" Grid.Row="1" Text="Choose a date:" HorizontalTextAlignment="Center"></Label>
             <DatePicker Grid.Column="1" Grid.Row="2" MinimumDate="01/01/2000"
                     MaximumDate="12/31/2099"
-                    Date="{Binding dateChoice, Mode=TwoWay, Converter={StaticResource nativeTypeConverter}, ConverterParameter=DateTime}}"
+                    DateSelected="DateSelected"
                         HorizontalOptions="Center"></DatePicker>
         </Grid>
 

@@ -19,7 +19,7 @@ namespace ACNADailyPrayer
         public string year;
 
         public string [] readings;
-        public List<int> psalmsOfTheDay;
+        public List<string> psalmsOfTheDay;
         public Collect collectOfTheDay;
         public string commemorations;
 
@@ -32,7 +32,7 @@ namespace ACNADailyPrayer
             year = dateElements[3];
 
             collectOfTheDay = new Collect();
-            psalmsOfTheDay = new List<int>();
+            psalmsOfTheDay = new List<string>();
             //psalmsOfTheDay.Add(102); psalmsOfTheDay.Add(103); psalmsOfTheDay.Add(104);
         }
     }
@@ -168,7 +168,7 @@ namespace ACNADailyPrayer
 
                 foreach(string psalmNumber in psalmsToFeedIn)
                 {
-                    date.psalmsOfTheDay.Add(int.Parse(psalmNumber));
+                    date.psalmsOfTheDay.Add(psalmNumber);
                 }
             }
         }
@@ -177,9 +177,10 @@ namespace ACNADailyPrayer
         {
             string psalmsString = "";
 
-            foreach(int psalmNumber in date.psalmsOfTheDay)
+            foreach(string psalmNumber in date.psalmsOfTheDay)
             {
-               psalmsString += "\n\n" + Service.GetReading("Psalm " + psalmNumber.ToString());
+                if (psalmNumber[0] == 'p') psalmsString += "\n\n" + Service.GetReading(psalmNumber);
+               else psalmsString += "\n\n" + Service.GetReading("Psalm " + psalmNumber);
             }
 
             return psalmsString;
