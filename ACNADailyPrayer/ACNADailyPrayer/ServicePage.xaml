@@ -10,10 +10,19 @@
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                   
             <Label x:Name="serviceTextLabel" 
                 Text="{Binding .}"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand"
+                  Grid.Column="1"/>
+                </Grid>
             </ScrollView>
         </StackLayout>
     </ContentPage.Content>

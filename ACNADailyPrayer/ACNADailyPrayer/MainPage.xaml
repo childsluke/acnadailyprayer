@@ -19,11 +19,31 @@
            VerticalOptions="CenterAndExpand"
                TextColor="Black"
                FontSize="Title"/>
+
+        <Grid VerticalOptions="CenterAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.25*"></RowDefinition>
+                <RowDefinition Height="0.25*"></RowDefinition>
+                <RowDefinition Height="0.25*"></RowDefinition>
+                <RowDefinition Height="0.25*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="1" Grid.Row="1" Text="Choose a date:" HorizontalTextAlignment="Center"></Label>
+            <DatePicker Grid.Column="1" Grid.Row="2" MinimumDate="01/01/2000"
+                    MaximumDate="12/31/2099"
+                    Date="{Binding dateChoice, Mode=TwoWay, Converter={StaticResource nativeTypeConverter}, ConverterParameter=DateTime}}"
+                        HorizontalOptions="Center"></DatePicker>
+        </Grid>
+
         <Grid HorizontalOptions="End">
          
-            <Button Grid.Column ="1"
-                Text="Morning Prayer" Clicked="MorningPrayer_Clicked" />
             <Button Grid.Column ="0"
+                Text="Morning Prayer" Clicked="MorningPrayer_Clicked" />
+            <Button Grid.Column ="1"
                 Text="Evening Prayer" Clicked="EveningPrayer_Clicked" />
         </Grid>
 

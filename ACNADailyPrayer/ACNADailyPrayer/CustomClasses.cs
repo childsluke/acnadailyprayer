@@ -187,6 +187,11 @@ namespace ACNADailyPrayer
 
         private void PrepareServiceText()
         {
+            serviceText.Add(date.weekday + " " + date.month + " " + date.date + " " + date.year + "\n\n");
+
+            if (serviceType == Office.MorningPrayer) serviceText.Add("Morning Prayer \n");
+            else if (serviceType == Office.EveningPrayer) serviceText.Add("Evening Prayer \n");
+
             serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.invitatory"));
 
             if (serviceType == Office.MorningPrayer)
