@@ -18,20 +18,15 @@ namespace ACNADailyPrayer
             InitializeComponent();
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-
-        }
-
 
         void MorningPrayer_Clicked(object sender, System.EventArgs e)
         {
             // TODO: A working alternative to this...
-            //Navigation.PushAsync(new Page1( new Service(Service.Office.MorningPrayer, "Thursday September 12 2019") ) );
+            Navigation.PushAsync(new Page1( new Service(Service.Office.MorningPrayer, "Thursday September 12 2019") ) );
         }
         void EveningPrayer_Clicked(object sender, System.EventArgs e)
         {
-
+            Navigation.PushAsync(new Page1(new Service(Service.Office.EveningPrayer, "Thursday September 12 2019")));
         }
 
     }

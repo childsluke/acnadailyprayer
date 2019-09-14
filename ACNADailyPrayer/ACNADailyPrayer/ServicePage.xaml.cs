@@ -12,10 +12,16 @@ namespace ACNADailyPrayer
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Page1 : ContentPage
     {
+
         public Page1(Service servicePushed)
         {
             InitializeComponent();
             
+            foreach(string s in servicePushed.serviceText)
+            {
+                serviceTextLabel.Text += s;
+                serviceTextLabel.Text += "\n";
+            }
         }
     }
 }
