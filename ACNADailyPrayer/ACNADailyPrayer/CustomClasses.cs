@@ -173,17 +173,17 @@ namespace ACNADailyPrayer
             }
         }
 
-        private string getDailyPsalms()
+        private void getDailyPsalms()
         {
-            string psalmsString = "";
+            string psalmString = "";
 
-            foreach(string psalmNumber in date.psalmsOfTheDay)
+            foreach (string psalmNumber in date.psalmsOfTheDay)
             {
-                if (psalmNumber[0] == 'p') psalmsString += "\n\n" + Service.GetReading(psalmNumber);
-               else psalmsString += "\n\n" + Service.GetReading("Psalm " + psalmNumber);
+                if (psalmNumber == "") break;
+                if (psalmNumber[0] == 'p') psalmString = Service.GetReading(psalmNumber);
+                else psalmString = Service.GetReading("Psalm " + psalmNumber);
+                serviceText.Add(psalmString + "\n");
             }
-
-            return psalmsString;
         }
 
         private void PrepareServiceText()
@@ -196,21 +196,41 @@ namespace ACNADailyPrayer
             serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.invitatory"));
 
             if (serviceType == Office.MorningPrayer)
+            {
                 serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.venite"));
-                    else if (serviceType == Office.EveningPrayer)
-                        serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.phoshilaron"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.doxology"));
+            }
+            else if (serviceType == Office.EveningPrayer)
+            {
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.phoshilaron"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.doxology"));
+            }
 
+            getDailyPsalms();
+            serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.doxology"));
 
-            serviceText.Add(getDailyPsalms());
-
-            if ((date.readings[0] != "") && (serviceType != Office.Compline))  serviceText.Add(Service.GetReading(date.readings[0]));
+            if ((date.readings[0] != "") && (serviceType != Office.Compline))
+            {
+                serviceText.Add(Service.GetReading(date.readings[0]) + "\n");
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.readingresponse"));
+            }
 
             if (serviceType == Office.MorningPrayer)
+            {
                 serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.tedeum"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.doxology"));
+            }
             else if (serviceType == Office.EveningPrayer)
+            {
                 serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.magnificat"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.doxology"));
+            }
 
-            if((date.readings[1] != "") && (serviceType != Office.Compline)) serviceText.Add(Service.GetReading(date.readings[1]));
+            if ((date.readings[1] != "") && (serviceType != Office.Compline))
+            {
+                serviceText.Add(Service.GetReading(date.readings[1]) + "\n");
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.readingresponse"));
+            }
 
             if (serviceType == Office.MorningPrayer)
                 serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.benedictus"));
@@ -221,7 +241,8 @@ namespace ACNADailyPrayer
 
             serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.kyrieourfathersuffrages"));
 
-            serviceText.Add(date.collectOfTheDay.collectText);
+            // TODO: IMPLEMENT COLLECT READING IN FROM FILES AND DECIPHERING CORRECT ONE FOR DAY BASED ON DATE
+            //serviceText.Add(date.collectOfTheDay.collectText);
 
             if (serviceType == Office.MorningPrayer)
             {

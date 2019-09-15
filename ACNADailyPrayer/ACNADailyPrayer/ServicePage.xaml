@@ -18,7 +18,7 @@
                     </Grid.ColumnDefinitions>
                    
             <Label x:Name="serviceTextLabel" 
-                Text="{Binding .}"
+                FormattedText="{Binding .}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand"
                   Grid.Column="1"/>

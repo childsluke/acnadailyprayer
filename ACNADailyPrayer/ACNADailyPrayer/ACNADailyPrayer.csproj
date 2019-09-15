@@ -18,6 +18,7 @@
     <None Remove="servicetexts\collectforgrace" />
     <None Remove="servicetexts\collectforpeaceevening" />
     <None Remove="servicetexts\collectforpeacemorning" />
+    <None Remove="servicetexts\doxology" />
     <None Remove="servicetexts\generalthanksgiving" />
     <None Remove="servicetexts\invitatory" />
     <None Remove="servicetexts\kyrieourfathersuffrages" />
@@ -26,6 +27,7 @@
     <None Remove="servicetexts\phoshilaron" />
     <None Remove="servicetexts\prayerformission" />
     <None Remove="servicetexts\prayerofstchrysostom" />
+    <None Remove="servicetexts\readingresponse" />
     <None Remove="servicetexts\tedeum" />
     <None Remove="servicetexts\thegrace" />
     <None Remove="servicetexts\venite" />
@@ -39,6 +41,7 @@
     <EmbeddedResource Include="servicetexts\collectforgrace" />
     <EmbeddedResource Include="servicetexts\collectforpeaceevening" />
     <EmbeddedResource Include="servicetexts\collectforpeacemorning" />
+    <EmbeddedResource Include="servicetexts\doxology" />
     <EmbeddedResource Include="servicetexts\generalthanksgiving" />
     <EmbeddedResource Include="servicetexts\invitatory" />
     <EmbeddedResource Include="servicetexts\kyrieourfathersuffrages" />
@@ -47,6 +50,7 @@
     <EmbeddedResource Include="servicetexts\phoshilaron" />
     <EmbeddedResource Include="servicetexts\prayerformission" />
     <EmbeddedResource Include="servicetexts\prayerofstchrysostom" />
+    <EmbeddedResource Include="servicetexts\readingresponse" />
     <EmbeddedResource Include="servicetexts\tedeum" />
     <EmbeddedResource Include="servicetexts\thegrace" />
     <EmbeddedResource Include="servicetexts\venite" />

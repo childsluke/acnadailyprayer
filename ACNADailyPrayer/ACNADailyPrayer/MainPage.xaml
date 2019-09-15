@@ -8,17 +8,22 @@
              mc:Ignorable="d"
              x:Class="ACNADailyPrayer.MainPage">
 
+    <NavigationPage.TitleView>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="ACNA Daily Prayer" FontSize="Title" TextColor="White" HorizontalTextAlignment="Center"></Label>
+            </StackLayout>
+        </NavigationPage.TitleView>
+
     <StackLayout>
         <!-- Place new controls here -->
 
-
-        <Image Source="http://www.anglicanchurch.net/img/acna-header-logo.png"
-               HeightRequest = "100"/>
-        <Label Text="Daily Prayer" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand"
-               TextColor="Black"
-               FontSize="Title"/>
+        <Grid VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.67*"></RowDefinition>
+               
+            </Grid.RowDefinitions>
+        <Image Source="http://www.anglicanchurch.net/img/acna-header-logo.png" Grid.Row="0" Aspect="AspectFit"/>
+        </Grid>
 
         <Grid VerticalOptions="CenterAndExpand">
             <Grid.ColumnDefinitions>
@@ -27,12 +32,18 @@
                 <ColumnDefinition Width="0.1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.25*"></RowDefinition>
-                <RowDefinition Height="0.25*"></RowDefinition>
-                <RowDefinition Height="0.25*"></RowDefinition>
-                <RowDefinition Height="0.25*"></RowDefinition>
+                <RowDefinition Height="0.33*"></RowDefinition>
+                <RowDefinition Height="0.33*"></RowDefinition>
+                <RowDefinition Height="0.33*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Grid.Column="1" Grid.Row="1" Text="Choose a date:" HorizontalTextAlignment="Center"></Label>
+            <Label Text="Daily Prayer" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand"
+               TextColor="Black"
+               FontSize="40"
+                   Grid.Column="1"
+               Grid.Row="0"/>
+            <Label Grid.Column="1" Grid.Row="1" FontSize="40" Text="Choose a date:" HorizontalTextAlignment="Center"></Label>
             <DatePicker Grid.Column="1" Grid.Row="2" MinimumDate="01/01/2000"
                     MaximumDate="12/31/2099"
                     DateSelected="DateSelected"
@@ -40,11 +51,11 @@
         </Grid>
 
         <Grid HorizontalOptions="End">
-         
+
             <Button Grid.Column ="0"
-                Text="Morning Prayer" Clicked="MorningPrayer_Clicked" />
+                Text="Morning Prayer" FontSize="Medium" Clicked="MorningPrayer_Clicked" />
             <Button Grid.Column ="1"
-                Text="Evening Prayer" Clicked="EveningPrayer_Clicked" />
+                Text="Evening Prayer" FontSize="Medium" Clicked="EveningPrayer_Clicked" />
         </Grid>
 
     </StackLayout>
