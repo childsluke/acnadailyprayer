@@ -26,10 +26,10 @@ namespace ACNADailyPrayer
                 FormattedString serviceFormattedText = new FormattedString();
                 
                 // Extract the title and format different to body 
-                serviceFormattedText.Spans.Add(new Span { Text = s.Split('\n')[0] + "\n", FontAttributes = FontAttributes.Bold, TextColor = Xamarin.Forms.Color.Red }) ;
+                serviceFormattedText.Spans.Add(new Span { Text = s.Split('\n')[0] + "\n", FontAttributes = FontAttributes.Bold, TextColor = Xamarin.Forms.Color.Black, FontSize = Device.GetNamedSize(NamedSize.Title, typeof(Label)) }) ;
 
                 // Extact the body as regular text
-                serviceFormattedText.Spans.Add(new Span { Text = (s.Remove(0, serviceFormattedText.Spans[0].Text.Length - 1) + "\n"), TextColor = Xamarin.Forms.Color.Blue });
+                serviceFormattedText.Spans.Add(new Span { Text = (s.Remove(0, serviceFormattedText.Spans[0].Text.Length - 1) + "\n"), TextColor = Xamarin.Forms.Color.DarkGray, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) });
                 
                 serviceTextLabel.FormattedText.Spans.Add(serviceFormattedText.Spans[0]);
                 serviceTextLabel.FormattedText.Spans.Add(serviceFormattedText.Spans[1]);
