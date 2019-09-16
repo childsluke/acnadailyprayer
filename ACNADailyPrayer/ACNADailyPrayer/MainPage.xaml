@@ -6,7 +6,10 @@
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
             ios:Page.UseSafeArea="true"
              mc:Ignorable="d"
-             x:Class="ACNADailyPrayer.MainPage">
+             x:Class="ACNADailyPrayer.MainPage"
+            xmlns:local="clr-namespace:ACNADailyPrayer;assembly=ACNADailyPrayer"
+>
+    
 
     <NavigationPage.TitleView>
             <StackLayout Orientation="Horizontal">
@@ -22,7 +25,8 @@
                 <RowDefinition Height="0.67*"></RowDefinition>
                
             </Grid.RowDefinitions>
-        <Image Source="http://www.anglicanchurch.net/img/acna-header-logo.png" Grid.Row="0" Aspect="AspectFit"/>
+            <Image Source="{local:ImageResource ACNADailyPrayer.acna-header-logo.png}" Grid.Row="0" Aspect="AspectFit"/>
+            
         </Grid>
 
         <Grid VerticalOptions="CenterAndExpand">

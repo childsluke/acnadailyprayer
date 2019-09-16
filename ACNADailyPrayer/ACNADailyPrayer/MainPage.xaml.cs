@@ -2,19 +2,43 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace ACNADailyPrayer
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
+
+
+    [ContentProperty(nameof(Source))]
+    public class ImageResourceExtension : IMarkupExtension
+    {
+        public string Source { get; set; }
+
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (Source == null)
+            {
+                return null;
+            }
+
+            // Do your translation lookup here, using whatever method you require
+            var imageSource = ImageSource.FromResource(Source, typeof(ImageResourceExtension).GetTypeInfo().Assembly);
+
+            return imageSource;
+        }
+    }
+
     public partial class MainPage : ContentPage
     {
         public DateTime todaysDate = DateTime.Today;
         public DateTime dateChoice = DateTime.Today;
+        public string headerImage = "";
 
         public MainPage()
         {
@@ -34,11 +58,27 @@ namespace ACNADailyPrayer
 
         void MorningPrayer_Clicked(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new Page1( new Service(Service.Office.MorningPrayer, getDate() ) ));
+            try
+            {
+                Navigation.PushAsync(new Page1(new Service(Service.Office.MorningPrayer, getDate())));
+            }
+            catch(Exception ex)
+            {
+                Navigation.PopAsync();
+                DisplayAlert("ERROR", ex.Message + "\n\n" + "Unable to load service - please check your Internet Connection", "OK");
+            }
         }
         void EveningPrayer_Clicked(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new Page1(new Service(Service.Office.EveningPrayer, getDate() ) ));
+            try
+            {
+                Navigation.PushAsync(new Page1(new Service(Service.Office.EveningPrayer, getDate())));
+            }
+            catch (Exception ex)
+            {
+                Navigation.PopAsync();
+                DisplayAlert("ERROR", ex.Message + "\n\n" + "Unable to load service - please check your Internet Connection", "OK");
+            }
         }
         void DateSelected(object sender, DateChangedEventArgs e)
         {

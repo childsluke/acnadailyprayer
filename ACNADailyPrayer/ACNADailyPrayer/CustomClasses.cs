@@ -69,7 +69,7 @@ namespace ACNADailyPrayer
             JToken token = parser.SelectToken("$.passages[0]");
 
 
-            return token.ToString().Trim();
+            try { return token.ToString().Trim(); } catch { return "Error obtaining reading"; }
         }
         public static string ReadServiceElementFromFile(string filePath)
         {
