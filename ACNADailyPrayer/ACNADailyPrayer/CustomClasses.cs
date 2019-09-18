@@ -175,14 +175,52 @@ namespace ACNADailyPrayer
 
         private void getDailyPsalms()
         {
-            string psalmString = "";
+            var assembly = typeof(App).GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream(@"ACNADailyPrayer.lectionary.2019bcppsalter");
+            StreamReader sReader = new StreamReader(stream);
+            string currentLine = "";
+
+            //string psalmString = "";
 
             foreach (string psalmNumber in date.psalmsOfTheDay)
             {
                 if (psalmNumber == "") break;
-                if (psalmNumber[0] == 'p') psalmString = Service.GetReading(psalmNumber);
-                else psalmString = Service.GetReading("Psalm " + psalmNumber);
-                serviceText.Add(psalmString + "\n");
+
+                // Old code for ESV Psalter
+                //if (psalmNumber[0] == 'p') psalmString = Service.GetReading(psalmNumber);
+                //else psalmString = Service.GetReading("Psalm " + psalmNumber);
+
+
+                // New code for BCP 2019 Psalter
+                string psalmToReturn = "";
+
+                while (!sReader.EndOfStream)
+                {
+                    // Find a Psalm (any line containing the word 'Psalm' exactly)
+                    if (!currentLine.Contains("Psalm" + " " + psalmNumber.Trim()))
+                    {
+                        currentLine = sReader.ReadLine();
+                    }
+
+                    // Stop and read the Psalm in if we hit the line we're looking for
+                    else
+                    {
+                        psalmToReturn += currentLine += "\n" + "\n";
+                        currentLine = sReader.ReadLine();
+
+
+                        // Read up to the next line that we hit that contains 'Psalm'
+                        while (!currentLine.Contains("Psalm") && (!sReader.EndOfStream))
+                        {
+                            psalmToReturn += currentLine + "\n";
+                            currentLine = sReader.ReadLine();
+                        }
+
+                        break;
+                    }
+                }
+
+                serviceText.Add(psalmToReturn + "\n");
             }
         }
 
@@ -263,6 +301,8 @@ namespace ACNADailyPrayer
 
 
             serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.generalthanksgiving"));
+
+            serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.prayerofstchrysostom"));
 
             serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.thegrace"));
 
