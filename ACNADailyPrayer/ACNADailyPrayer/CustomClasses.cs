@@ -111,6 +111,10 @@ namespace ACNADailyPrayer
             // This function takes read the specified month file (e.g. "January_lectionary"), and then reads the Bible readings in tab-delimited format,
             // then returns a list of bible reference as a string to plug into another API for the actual reading text
 
+
+            // TODO HERE: Check service date alongside date of Easter, and pull from specialist lectionary if needed instead of regular monthly
+            // (for Holy Week, Easter, Ascension Day and Pentecost)
+
             var assembly = typeof(App).GetTypeInfo().Assembly;
             Stream stream = assembly.GetManifestResourceStream(@"ACNADailyPrayer.lectionary." + date.month + "_lectionary");
 
