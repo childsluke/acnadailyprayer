@@ -39,8 +39,13 @@ namespace ACNADailyPrayer
              //Console.Write(ACNADailyPrayer.Service.GetReading("Psalm 5"));
              Console.Write(string.Join("\n", testService.serviceText.ToArray()));*/
 
-            Console.WriteLine(readBCP2019Psalms(150));
+            //Console.WriteLine(readBCP2019Psalms(150));
+            Console.Write("Enter year and I will give you the date of Easter: ");
+            DateTime easterDateCalculated = Service.dateOfEaster(int.Parse(Console.ReadLine()));
 
+            Console.WriteLine("\n Date is " + easterDateCalculated.ToString());
+
+;
             Console.WriteLine("\n");
             Console.WriteLine("Press any key to continue...");
             Console.Read();

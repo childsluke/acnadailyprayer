@@ -15,6 +15,7 @@
     <None Remove="lectionary\2019bcppsalter" />
     <None Remove="lectionary\April_lectionary" />
     <None Remove="lectionary\August_lectionary" />
+    <None Remove="lectionary\collects" />
     <None Remove="lectionary\December_lectionary" />
     <None Remove="lectionary\February_lectionary" />
     <None Remove="lectionary\HolyweekEasterAscensionPentecost_lectionary" />
@@ -52,6 +53,7 @@
     <EmbeddedResource Include="lectionary\2019bcppsalter" />
     <EmbeddedResource Include="lectionary\April_lectionary" />
     <EmbeddedResource Include="lectionary\August_lectionary" />
+    <EmbeddedResource Include="lectionary\collects" />
     <EmbeddedResource Include="lectionary\December_lectionary" />
     <EmbeddedResource Include="lectionary\February_lectionary" />
     <EmbeddedResource Include="lectionary\HolyweekEasterAscensionPentecost_lectionary" />
