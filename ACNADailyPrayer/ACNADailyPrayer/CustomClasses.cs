@@ -18,9 +18,8 @@ namespace ACNADailyPrayer
         public string weekday;
         public string year;
 
-        public string [] readings;
+        public string[] readings;
         public List<string> psalmsOfTheDay;
-        public Collect collectOfTheDay;
         public string commemorations;
 
         public ServiceDate(string dateIn)
@@ -31,26 +30,13 @@ namespace ACNADailyPrayer
             date = int.Parse(dateElements[2]);
             year = dateElements[3];
 
-            collectOfTheDay = new Collect();
             psalmsOfTheDay = new List<string>();
-            //psalmsOfTheDay.Add(102); psalmsOfTheDay.Add(103); psalmsOfTheDay.Add(104);
-        }
-    }
-
-    class Collect
-    {
-       public string collectText;
-       public string collectTitle;
-
-        public Collect()
-        {
-            collectText = ""; collectTitle = "";
         }
     }
 
     public class Service
     {
-        
+
         public static string apiKey = "fc3f492dd3431c10bacd0386ed01964cb769025a";
         public static string endPointURL = "https://api.esv.org/v3/passage/text/?";
 
@@ -81,7 +67,7 @@ namespace ACNADailyPrayer
             StreamReader sReader = new StreamReader(stream);
             while (!sReader.EndOfStream) readString += sReader.ReadLine() + "\n";
 
-                 return readString;
+            return readString;
         }
 
         public static DateTime dateOfEaster(int year)
@@ -98,7 +84,7 @@ namespace ACNADailyPrayer
             DateTime calculatedDate = new DateTime();
 
             // Golden Number lookup
-            switch(subtracter)
+            switch (subtracter)
             {
                 case 1:
                     calculatedDate = new DateTime(year, 3, 27);
@@ -182,10 +168,10 @@ namespace ACNADailyPrayer
 
             // Sunday next after the date calculated above is Easter!
             bool sundayFound = false;
-            while(!sundayFound)
+            while (!sundayFound)
             {
                 if (calculatedDate.DayOfWeek != DayOfWeek.Sunday)
-                   calculatedDate = calculatedDate.AddDays(1);
+                    calculatedDate = calculatedDate.AddDays(1);
                 else
                     sundayFound = true;
             }
@@ -200,8 +186,9 @@ namespace ACNADailyPrayer
 
         ServiceDate date;
         Office serviceType;
-        Collect collectOfTheDay;
+
         public List<string> serviceText;
+        public List<string> collectsOfTheDay;
 
 
         public Service(Office officeTypeIn, string fullDate)
@@ -209,10 +196,11 @@ namespace ACNADailyPrayer
             serviceType = officeTypeIn;
             serviceText = new List<string>();
             date = new ServiceDate(fullDate);
+            collectsOfTheDay = new List<string>();
 
             readDailyPsalmsFromFile(@"ACNADailyPrayer.lectionary.psalmcycletabdelim");
             readDailyReadings();
-            getDailyCollect();
+            chooseDailyCollect();
 
             PrepareServiceText();
         }
@@ -238,7 +226,7 @@ namespace ACNADailyPrayer
                     string currentLine = sReader_.ReadLine();
 
                     // Maundy Thursday
-                    if(dateOfChosenService == dateOfEaster.AddDays(-3) && currentLine.Contains("MaundyThursday")  ||
+                    if (dateOfChosenService == dateOfEaster.AddDays(-3) && currentLine.Contains("MaundyThursday") ||
 
                     // Good Friday
                     (dateOfChosenService == dateOfEaster.AddDays(-2) && currentLine.Contains("GoodFriday") ||
@@ -246,7 +234,7 @@ namespace ACNADailyPrayer
 
                     // Holy Saturday
                     (dateOfChosenService == dateOfEaster.AddDays(-1) && currentLine.Contains("HolySaturday") ||
-   
+
 
                     // Easter Day
                     (dateOfChosenService == dateOfEaster && currentLine.Contains("EasterDay") ||
@@ -254,18 +242,18 @@ namespace ACNADailyPrayer
 
                     // Ascension
                     (dateOfChosenService == dateOfEaster.AddDays(39) && currentLine.Contains("Ascension") ||
- 
+
 
                     // Pentecost
                     (dateOfChosenService == dateOfEaster.AddDays(49) && currentLine.Contains("Pentecost")))))))
-                    
+
                     {
                         string[] currentLineSplit = currentLine.Split(delimiter);
                         if (this.serviceType == Office.MorningPrayer)
                         {
                             date.readings = currentLineSplit[2].Split(',');
                         }
-                        else if(this.serviceType == Office.EveningPrayer)
+                        else if (this.serviceType == Office.EveningPrayer)
                         {
                             date.readings = currentLineSplit[4].Split(',');
                         }
@@ -344,7 +332,7 @@ namespace ACNADailyPrayer
 
                     {
                         string[] currentLineSplit = currentLine.Split(delimiter);
-                        string [] psalmsToFeedIn = new string[0];
+                        string[] psalmsToFeedIn = new string[0];
 
                         if (this.serviceType == Office.MorningPrayer)
                         {
@@ -355,7 +343,7 @@ namespace ACNADailyPrayer
                             psalmsToFeedIn = currentLineSplit[3].Split(',');
                         }
 
-                        foreach(string psalmNumber in psalmsToFeedIn )
+                        foreach (string psalmNumber in psalmsToFeedIn)
                         {
                             date.psalmsOfTheDay.Add(psalmNumber);
                         }
@@ -380,11 +368,11 @@ namespace ACNADailyPrayer
             {
                 dateToPull = 30;
             }
-            
+
             while (!sReader.EndOfStream)
             {
                 string currentLine = sReader.ReadLine();
-                string [] currentLineSplit = currentLine.Split(delimiter);
+                string[] currentLineSplit = currentLine.Split(delimiter);
 
                 // Don't waste processing on a different date, just go to the next line
                 if (currentLineSplit[0] != dateToPull.ToString()) continue;
@@ -394,7 +382,7 @@ namespace ACNADailyPrayer
                 if (serviceType == Office.MorningPrayer) psalmsToFeedIn = currentLineSplit[1].Split(',');
                 else if (serviceType == Office.EveningPrayer) psalmsToFeedIn = currentLineSplit[2].Split(',');
 
-                foreach(string psalmNumber in psalmsToFeedIn)
+                foreach (string psalmNumber in psalmsToFeedIn)
                 {
                     date.psalmsOfTheDay.Add(psalmNumber);
                 }
@@ -452,30 +440,159 @@ namespace ACNADailyPrayer
             }
         }
 
-        private void getDailyCollect()
+        private void chooseDailyCollect()
         {
-            // TODO:
-            
-            // This function will ascertain first which collect to look for, based on...
-            // 1) Feast Day
-            // (Christmas, Epiphany, Presentation, Ascension)
-            // 2) Holy Week, Easter, Easter Week, Ascension Day, Pentecost, or Ash Wednesday 
+            // TOFINISH:
+
+            // This function will ascertain which collect to look for, based on...
+            // 1) Static Feast Days - DONE!
+            // 
+            // 2) Variable Feast/Fast Days - Holy Week, Easter, Easter Week, Ascension Day, Pentecost, or Ash Wednesday 
 
             // For other dates, it will roll back to the previous Sunday, and then calculate the collect from that Sunday based on:
-            // 1) During Advent
+            // 1) During Advent - DONE!
             // 2) During Epiphany
             // 3) During Lent
             // 4) During Easter
             // 5) Sunday after Ascension
             // 6) Pentecost, Trinity Sunday, and 'propers' (Sundays after Pentecost/Trinity)
 
-            // It will then look for the appropriate Collect title in the collects file, and read in until it hits a line containing 'Amen'.
-            // For certain seasons, it will have to read in two collects (eg during Lent, the collect for Ash Wednesday AND the Sunday in Lent) and concatenate them
+            DateTime dateOfChosenService = new DateTime(int.Parse(this.date.year), Convert.ToDateTime(this.date.month + " 01, 1900").Month, this.date.date);
+            DateTime previousSunday = dateOfChosenService;
+            DateTime nextSunday = dateOfChosenService;
 
-            collectOfTheDay = new Collect();
-            collectOfTheDay.collectText = "";
+            // Get the previous Sunday to our date
+            bool sundayFound = false;
+
+            while (!sundayFound)
+            {
+                if (previousSunday.DayOfWeek == DayOfWeek.Sunday) sundayFound = true;
+                else previousSunday = previousSunday.AddDays(-1);
+            }
+
+            // Get the next Sunday to our date
+            sundayFound = false;
+
+            while (!sundayFound)
+            {
+                if (nextSunday.DayOfWeek == DayOfWeek.Sunday) sundayFound = true;
+                else nextSunday = nextSunday.AddDays(-1);
+            }
+
+            // Other dates we will measure by
+            DateTime dateOfChristmas = new DateTime();
+
+            if (dateOfChosenService.Month == 1)
+                dateOfChristmas = new DateTime(dateOfChosenService.Year - 1, 12, 25);
+            else
+                dateOfChristmas = new DateTime(dateOfChosenService.Year, 12, 25);
+
+
+            DateTime dateOfEaster = Service.dateOfEaster(int.Parse(this.date.year));
+            DateTime dateOfAshWednesday = dateOfEaster.AddDays(-46);
+            DateTime dateOfAscension = dateOfEaster.AddDays(39);
+            DateTime dateOfPentecost = dateOfEaster.AddDays(49);
+
+            // Feast days have the date in the collect line, so read based on that
+            getDailyCollect(date.month + " " + date.date);
+
+            // Let's do Advent next - every date in December up to the 25th. They all start with ADVENT 1 plus (if relevant) their additional connected Sunday
+            if ((date.month == "December") && (date.date < 24))
+            {
+                getDailyCollect("ADVENT 1");
+
+                if (previousSunday.AddDays(-7).Month != 12) return;
+
+                // Check for ADVENT 2, 3, or 4
+                else if ((previousSunday.AddDays(-7).Day >= 1) && (previousSunday.AddDays(-7).Day <= 7))
+                {
+                    getDailyCollect("ADVENT 2");
+                    return;
+                }
+                else if ((previousSunday.AddDays(-7).Day >= 8) && (previousSunday.AddDays(-7).Day <= 14))
+                {
+                    getDailyCollect("ADVENT 3");
+                    return;
+                }
+                else if ((previousSunday.AddDays(-7).Day >= 15) && (previousSunday.AddDays(-7).Day <= 21))
+                {
+                    getDailyCollect("ADVENT 4");
+                    return;
+                }
+            }
+            
+            // Christmas 1 and 2
+            else if( (date.month == "December" && date.date >= 28) || (date.month == "January" && date.date < 6) )
+            {
+                DateTime sundayAfterChristmas = nextSunday;
+
+                if(dateOfChosenService < sundayAfterChristmas)
+                {
+                    getDailyCollect("December 25");
+                    return;
+                }
+
+                // Christmas 1
+                else if( (dateOfChosenService >= sundayAfterChristmas) && (dateOfChosenService < sundayAfterChristmas.AddDays(7)) )
+                {
+                    getDailyCollect("CHRISTMAS 1");
+                    return;
+                }
+                // Christmas 2
+                else if(dateOfChosenService >= sundayAfterChristmas.AddDays(7))
+                {
+                    getDailyCollect("CHRISTMAS 2");
+                    return;
+                }
+            }
+               
+            // TODO: Epiphanytide, Lent, Eastertide, Ascensiontide, Ordinary Time
 
         }
+
+        private void getDailyCollect(string chosenCollect)
+        {
+
+            // This function will look for the appropriate Collect title in the collects file, and read in until it hits a line containing 'Amen'.
+            // For certain seasons, it will have to read in two collects (eg during Lent, the collect for Ash Wednesday AND the Sunday in Lent) and concatenate them
+            string textReadIn = "";
+            string currentLine = "";
+
+            var assembly = typeof(App).GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream(@"ACNADailyPrayer.lectionary.collects");
+            StreamReader sReader = new StreamReader(stream);
+
+            while (!sReader.EndOfStream)
+            {
+                // Find the start of our collect
+                if (currentLine.Contains(chosenCollect))
+                {
+                    // For dated collects, check for an exact match
+                    if(currentLine.Contains("("))
+                    {
+                        string [] lineDate = currentLine.Split(new char[] { '(', ')' });
+                        lineDate = lineDate[lineDate.Length - 2].Split(' ');
+                        string[] inputDate = chosenCollect.Split(' ');
+
+                        if (lineDate[lineDate.Length - 1] != inputDate[1]) return;
+;                    }
+
+                    // Read in until we reach the Amen
+                    while (!currentLine.Contains("Amen"))
+                    {
+                        textReadIn += currentLine + "\n";
+                        currentLine = sReader.ReadLine();
+                    }
+
+                    textReadIn += currentLine;
+                    break;
+                }
+                else currentLine = sReader.ReadLine();
+            }
+
+            collectsOfTheDay.Add(textReadIn + "\n");
+        }
+
 
         private void PrepareServiceText()
         {
@@ -533,7 +650,7 @@ namespace ACNADailyPrayer
             serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.kyrieourfathersuffrages"));
 
             // TODO: IMPLEMENT COLLECT READING IN FROM FILES AND DECIPHERING CORRECT ONE FOR DAY BASED ON DATE
-            serviceText.Add(date.collectOfTheDay.collectText);
+            foreach (string collectOfTheDay in collectsOfTheDay) serviceText.Add(collectOfTheDay);
 
             if (serviceType == Office.MorningPrayer)
             {
@@ -561,5 +678,5 @@ namespace ACNADailyPrayer
 
         }
     }
-
 }
+
