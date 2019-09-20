@@ -451,7 +451,7 @@ namespace ACNADailyPrayer
 
             // For other dates, it will roll back to the previous Sunday, and then calculate the collect from that Sunday based on:
             // 1) During Advent - DONE!
-            // 2) During Epiphany
+            // 2) During Epiphany - DONE!
             // 3) During Lent
             // 4) During Easter
             // 5) Sunday after Ascension
@@ -488,7 +488,8 @@ namespace ACNADailyPrayer
                 dateOfChristmas = new DateTime(dateOfChosenService.Year, 12, 25);
 
 
-            DateTime dateOfEaster = Service.dateOfEaster(int.Parse(this.date.year));
+            DateTime dateOfEpiphany = new DateTime(dateOfChosenService.Year, 1, 6);
+            DateTime dateOfEaster = Service.dateOfEaster(dateOfChosenService.Year);
             DateTime dateOfAshWednesday = dateOfEaster.AddDays(-46);
             DateTime dateOfAscension = dateOfEaster.AddDays(39);
             DateTime dateOfPentecost = dateOfEaster.AddDays(49);
@@ -520,33 +521,79 @@ namespace ACNADailyPrayer
                     return;
                 }
             }
-            
+
             // Christmas 1 and 2
-            else if( (date.month == "December" && date.date >= 28) || (date.month == "January" && date.date < 6) )
+            else if ((date.month == "December" && date.date >= 28) || (date.month == "January" && date.date < 6))
             {
                 DateTime sundayAfterChristmas = nextSunday;
 
-                if(dateOfChosenService < sundayAfterChristmas)
+                if (dateOfChosenService < sundayAfterChristmas)
                 {
                     getDailyCollect("December 25");
                     return;
                 }
 
                 // Christmas 1
-                else if( (dateOfChosenService >= sundayAfterChristmas) && (dateOfChosenService < sundayAfterChristmas.AddDays(7)) )
+                else if ((dateOfChosenService >= sundayAfterChristmas) && (dateOfChosenService < sundayAfterChristmas.AddDays(7)))
                 {
                     getDailyCollect("CHRISTMAS 1");
                     return;
                 }
                 // Christmas 2
-                else if(dateOfChosenService >= sundayAfterChristmas.AddDays(7))
+                else if (dateOfChosenService >= sundayAfterChristmas.AddDays(7))
                 {
                     getDailyCollect("CHRISTMAS 2");
                     return;
                 }
             }
-               
-            // TODO: Epiphanytide, Lent, Eastertide, Ascensiontide, Ordinary Time
+
+            // TODO: Lent, Eastertide, Ascensiontide, Ordinary Time
+
+            // Epiphanytide
+            if ((dateOfChosenService >= dateOfEpiphany) && (dateOfChosenService < dateOfAshWednesday))
+            {
+                // Between Epiphany itself and the first Sunday after Epiphany, we just push the Epiphany collect
+                if ((dateOfChosenService > dateOfEpiphany) && (dateOfChosenService.Day < 13) && (dateOfChosenService.DayOfWeek != DayOfWeek.Sunday) && (dateOfChosenService.Month == 1) )
+                {
+                    getDailyCollect("January 6");
+                    return;
+                }
+                // Sunday before Lent and second-to-last Sunday before Lent
+                else if (previousSunday.AddDays(7) > dateOfAshWednesday)
+                {
+                    getDailyCollect("EPIPHANY 10");
+                    return;
+                }
+                else if (previousSunday.AddDays(14) > dateOfAshWednesday)
+                {
+                    getDailyCollect("EPIPHANY 9");
+                    return;
+                }
+
+                // Epiphany 1 through 8
+                int sundaysSinceEpiphany = 1;
+                while (true)
+                {
+                    if (previousSunday.AddDays(sundaysSinceEpiphany * -7) < dateOfEpiphany)
+                    {
+                        getDailyCollect("EPIPHANY " + sundaysSinceEpiphany.ToString());
+                        return;
+                    }
+                    else sundaysSinceEpiphany++;
+                    if (sundaysSinceEpiphany > 8) break;
+                }
+
+            }
+
+            // Ash Wednesday & Lent TOFINISH
+            if ((dateOfChosenService >= dateOfAshWednesday) && (dateOfChosenService < dateOfEaster.AddDays(-7)))
+            {
+                getDailyCollect("ASH WEDNESDAY");
+
+                // TODO: Lenten Sundays here
+
+                return;
+            }
 
         }
 
