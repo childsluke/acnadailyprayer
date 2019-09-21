@@ -442,18 +442,16 @@ namespace ACNADailyPrayer
 
         private void chooseDailyCollect()
         {
-            // TOFINISH:
-
             // This function will ascertain which collect to look for, based on...
-            // 1) Static Feast Days - DONE!
+            // 1) Static Feast Days
             // 
             // 2) Variable Feast/Fast Days - Holy Week, Easter, Easter Week, Ascension Day, Pentecost, or Ash Wednesday 
 
             // For other dates, it will roll back to the previous Sunday, and then calculate the collect from that Sunday based on:
-            // 1) During Advent - DONE!
-            // 2) During Epiphany - DONE!
+            // 1) During Advent
+            // 2) During Epiphany
             // 3) During Lent
-            // 4) During Easter
+            // 4) During Holy Week & Easter
             // 5) Sunday after Ascension
             // 6) Pentecost, Trinity Sunday, and 'propers' (Sundays after Pentecost/Trinity)
 
@@ -547,8 +545,6 @@ namespace ACNADailyPrayer
                 }
             }
 
-            // TODO: Lent, Eastertide, Ascensiontide, Ordinary Time
-
             // Epiphanytide
             if ((dateOfChosenService >= dateOfEpiphany) && (dateOfChosenService < dateOfAshWednesday))
             {
@@ -585,13 +581,165 @@ namespace ACNADailyPrayer
 
             }
 
-            // Ash Wednesday & Lent TOFINISH
+            // Ash Wednesday & Lent
             if ((dateOfChosenService >= dateOfAshWednesday) && (dateOfChosenService < dateOfEaster.AddDays(-7)))
             {
+                // Every day in Lent has the Ash Wednesday Collect
                 getDailyCollect("ASH WEDNESDAY");
+                if (dateOfChosenService < dateOfAshWednesday.AddDays(4)) return;
 
-                // TODO: Lenten Sundays here
+                // Lenten Sundays (1 through 5)
+                else
+                {
+                    int sundaysAfterLent = 1;
+                    while (true)
+                    {
+                        if (previousSunday.AddDays(-7 * sundaysAfterLent) < dateOfAshWednesday)
+                        {
+                            getDailyCollect("LENT " + sundaysAfterLent.ToString());
+                            return;
+                        }
+                        else sundaysAfterLent++;
+                        if (sundaysAfterLent > 5) break;
+                    }
+                }
 
+                return;
+            }
+
+
+            // Holy Week
+            else if(dateOfChosenService < dateOfEaster)
+            {
+                if(dateOfChosenService == dateOfEaster.AddDays(-7))
+                {
+                    getDailyCollect("PALM SUNDAY");
+                    return;
+                }
+                else if(dateOfChosenService == dateOfEaster.AddDays(-6))
+                {
+                    getDailyCollect("HOLY MONDAY");
+                    return;
+                }
+                else if (dateOfChosenService == dateOfEaster.AddDays(-5))
+                {
+                    getDailyCollect("HOLY TUESDAY");
+                    return;
+                }
+                else if (dateOfChosenService == dateOfEaster.AddDays(-4))
+                {
+                    getDailyCollect("HOLY WEDNESDAY");
+                    return;
+                }
+                else if (dateOfChosenService == dateOfEaster.AddDays(-3))
+                {
+                    getDailyCollect("MAUNDY THURSDAY");
+                    return;
+                }
+                else if (dateOfChosenService == dateOfEaster.AddDays(-2))
+                {
+                    getDailyCollect("GOOD FRIDAY");
+                    return;
+                }
+                else if ( (dateOfChosenService == dateOfEaster.AddDays(-1)) && (serviceType == Office.MorningPrayer) )
+                {
+                    getDailyCollect("HOLY SATURDAY");
+                    return;
+                }
+                else if ((dateOfChosenService == dateOfEaster.AddDays(-1)) && (serviceType == Office.EveningPrayer))
+                {
+                    getDailyCollect("EASTER EVE");
+                    return;
+                }
+
+            }
+
+            // Easter and Easter week
+            if (dateOfChosenService == dateOfEaster)
+            {
+                getDailyCollect("EASTER DAY");
+                return;
+            }
+            else if (dateOfChosenService == dateOfEaster.AddDays(1))
+            {
+                getDailyCollect("EASTER MONDAY");
+                return;
+            }
+            else if (dateOfChosenService == dateOfEaster.AddDays(2))
+            {
+                getDailyCollect("EASTER TUESDAY");
+                return;
+            }
+            else if (dateOfChosenService == dateOfEaster.AddDays(3))
+            {
+                getDailyCollect("EASTER WEDNESDAY");
+                return;
+            }
+            else if (dateOfChosenService == dateOfEaster.AddDays(4))
+            {
+                getDailyCollect("EASTER THURSDAY");
+                return;
+            }
+            else if (dateOfChosenService == dateOfEaster.AddDays(5))
+            {
+                getDailyCollect("EASTER FRIDAY");
+                return;
+            }
+            else if (dateOfChosenService == dateOfEaster.AddDays(6))
+            {
+                getDailyCollect("EASTER SATURDAY");
+                return;
+            }
+
+            // Sundays of Eastertide (1 thru 5)
+
+            if ((dateOfChosenService >= dateOfEaster.AddDays(7)) && (dateOfChosenService < dateOfAscension))
+            {
+                int sundaysAfterEaster = 1;
+                while (true)
+                {
+                    if (previousSunday.AddDays(-7 * sundaysAfterEaster) < dateOfEaster)
+                    {
+                        getDailyCollect("EASTER " + sundaysAfterEaster.ToString());
+                        return;
+                    }
+                    else sundaysAfterEaster++;
+                    if (sundaysAfterEaster > 5) break;
+                }
+            }
+
+            // Ascension, Sunday after Ascension, Pentecost, Trinity Sunday
+            else if( (dateOfChosenService == dateOfAscension) || (dateOfChosenService == dateOfAscension.AddDays(1)) || (dateOfChosenService == dateOfAscension.AddDays(2)) )
+            {
+                getDailyCollect("ASCENSION DAY");
+                return;
+            }
+            else if( (dateOfChosenService == dateOfAscension.AddDays(3)) || (previousSunday.AddDays(-7) < dateOfAscension) )
+            {
+                getDailyCollect("ASCENSION 1");
+                    return;
+            }
+            else if (previousSunday.AddDays(-7) < dateOfPentecost)
+            {
+                getDailyCollect("PENTECOST");
+                return;
+            }
+            else if(previousSunday.AddDays(-14) < dateOfPentecost)
+            {
+                getDailyCollect("TRINITY");
+                return;
+            }
+
+
+            // Ordinary Time & Christ the King
+            else
+            {
+                if(dateOfChosenService.AddDays(7).Month == 12)
+                {
+                    getDailyCollect("Christ the King");
+                    return;
+                }
+                getDailyCollect("Week of " + previousSunday.ToString("MMMM") + " " + previousSunday.Day);
                 return;
             }
 
@@ -599,7 +747,6 @@ namespace ACNADailyPrayer
 
         private void getDailyCollect(string chosenCollect)
         {
-
             // This function will look for the appropriate Collect title in the collects file, and read in until it hits a line containing 'Amen'.
             // For certain seasons, it will have to read in two collects (eg during Lent, the collect for Ash Wednesday AND the Sunday in Lent) and concatenate them
             string textReadIn = "";
@@ -609,13 +756,69 @@ namespace ACNADailyPrayer
             Stream stream = assembly.GetManifestResourceStream(@"ACNADailyPrayer.lectionary.collects");
             StreamReader sReader = new StreamReader(stream);
 
+            string stringToTest = chosenCollect;
+            if (chosenCollect.Contains("Week of")) stringToTest = "Week of";
+
             while (!sReader.EndOfStream)
             {
                 // Find the start of our collect
-                if (currentLine.Contains(chosenCollect))
+                if (currentLine.Contains(stringToTest))
                 {
+
+                    if ((currentLine.Contains("Week of")) && (!chosenCollect.Contains("Week of"))) return;
+                    else if ((currentLine.Contains("Week of")) && (chosenCollect.Contains("Week of")))
+                    {
+                        // Read in 'Week of' Ordinary time collects:
+
+                        // Strip out the before and after dates to compare our input date
+                        string[] splitCurrentLine = currentLine.Trim().Split(' ');
+                        string[] splitChosenCollect = chosenCollect.Split(' ');
+
+                        string currentLineMonth1 = splitCurrentLine[splitCurrentLine.Length - 5];
+                        string currentLineMonth2 = splitCurrentLine[splitCurrentLine.Length - 2];
+                        int currentLineDate1 = int.Parse(splitCurrentLine[splitCurrentLine.Length - 4]);
+                        int currentLineDate2 = int.Parse(splitCurrentLine[splitCurrentLine.Length - 1]);
+                        string chosenCollectMonth = splitChosenCollect[splitChosenCollect.Length - 2];
+                        int chosenCollectDate = int.Parse(splitChosenCollect[splitChosenCollect.Length - 1]);
+
+                        // TOFINISH: If our inputted date is between the dates we've hit, read in, otherwise Continue to the next while cycle to look for another collect
+                        if( (chosenCollectMonth != currentLineMonth1) && (chosenCollectMonth != currentLineMonth2) )
+                        {
+                            currentLine = sReader.ReadLine();
+                            continue;
+                        }
+
+                        // If all months match, just see if our read-in date is within the range of this line
+                        if ((chosenCollectMonth == currentLineMonth1) && (chosenCollectMonth == currentLineMonth2))
+                        {
+                            if( !((chosenCollectDate >= currentLineDate1) && (chosenCollectDate <= currentLineDate2 )) )
+                            {
+                                currentLine = sReader.ReadLine();
+                                continue;
+                            }
+                        }
+
+                        // If months don't match, we have to do some arithmetic...
+                        else
+                        {
+                            DateTime currentLineDateTime1 = DateTime.Parse(currentLineMonth1 + " " + currentLineDate1.ToString());
+                            DateTime currentLineDateTime2 = DateTime.Parse(currentLineMonth2 + " " + currentLineDate2.ToString());
+                            DateTime chosenCollectDateTime = DateTime.Parse(chosenCollectMonth + " " + chosenCollectDate.ToString());
+                            
+                            // If our collect date is NOT between the two line dates, continue to the next cycle
+                            if (! ( (chosenCollectDateTime >= currentLineDateTime1) && (chosenCollectDateTime <= currentLineDateTime2) ) )
+                            {
+                                currentLine = sReader.ReadLine();
+                                continue;
+                            }
+                        }
+
+
+
+                    }
+
                     // For dated collects, check for an exact match
-                    if(currentLine.Contains("("))
+                    if (currentLine.Contains("("))
                     {
                         string [] lineDate = currentLine.Split(new char[] { '(', ')' });
                         lineDate = lineDate[lineDate.Length - 2].Split(' ');
