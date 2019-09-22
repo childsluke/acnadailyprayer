@@ -38,6 +38,7 @@
     <None Remove="servicetexts\generalthanksgiving" />
     <None Remove="servicetexts\invitatory" />
     <None Remove="servicetexts\kyrieourfathersuffrages" />
+    <None Remove="servicetexts\legaltext" />
     <None Remove="servicetexts\magnificat" />
     <None Remove="servicetexts\nuncdimittis" />
     <None Remove="servicetexts\phoshilaron" />
@@ -76,6 +77,7 @@
     <EmbeddedResource Include="servicetexts\generalthanksgiving" />
     <EmbeddedResource Include="servicetexts\invitatory" />
     <EmbeddedResource Include="servicetexts\kyrieourfathersuffrages" />
+    <EmbeddedResource Include="servicetexts\legaltext" />
     <EmbeddedResource Include="servicetexts\magnificat" />
     <EmbeddedResource Include="servicetexts\nuncdimittis" />
     <EmbeddedResource Include="servicetexts\phoshilaron" />

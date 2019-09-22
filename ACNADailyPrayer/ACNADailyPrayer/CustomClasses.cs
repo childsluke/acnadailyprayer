@@ -61,7 +61,7 @@ namespace ACNADailyPrayer
             }
             catch(Exception ex)
             {
-                return ex.Message + " - Error obtaining reading";
+                return inputReading + "\n" + ex.Message + " - Error obtaining reading";
             }
 
         }
@@ -933,6 +933,9 @@ namespace ACNADailyPrayer
             serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.prayerofstchrysostom"));
 
             serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.thegrace"));
+
+            serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.legaltext") + "\n\n");
+
 
         }
     }
