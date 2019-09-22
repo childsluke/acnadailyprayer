@@ -43,19 +43,27 @@ namespace ACNADailyPrayer
         public static string GetReading(string inputReading)
         {
 
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(ACNADailyPrayer.Service.endPointURL + "include-footnotes=false" + "&" + "include-verse-numbers=false" + "&" + "include-passage-references=true"
-                                        + "&" + "include-headings=false" + "&" + "q=" + inputReading);
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.Timeout = new System.TimeSpan(0, 0, 10); // 10-second timeout
+                client.BaseAddress = new Uri(ACNADailyPrayer.Service.endPointURL + "include-footnotes=false" + "&" + "include-verse-numbers=false" + "&" + "include-passage-references=true"
+                                            + "&" + "include-headings=false" + "&" + "q=" + inputReading);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue
 
-            ("Token", ACNADailyPrayer.Service.apiKey);
+                ("Token", ACNADailyPrayer.Service.apiKey);
 
-            string requestJSON = client.GetStringAsync(client.BaseAddress).Result;
-            JObject parser = JObject.Parse(requestJSON);
-            JToken token = parser.SelectToken("$.passages[0]");
+                string requestJSON = client.GetStringAsync(client.BaseAddress).Result;
+                JObject parser = JObject.Parse(requestJSON);
+                JToken token = parser.SelectToken("$.passages[0]");
 
+                return token.ToString().Trim();
+            }
+            catch(Exception ex)
+            {
+                return ex.Message + " - Error obtaining reading";
+            }
 
-            try { return token.ToString().Trim(); } catch { return "Error obtaining reading"; }
         }
         public static string ReadServiceElementFromFile(string filePath)
         {
@@ -66,7 +74,7 @@ namespace ACNADailyPrayer
 
             StreamReader sReader = new StreamReader(stream);
             while (!sReader.EndOfStream) readString += sReader.ReadLine() + "\n";
-
+            sReader.Close();
             return readString;
         }
 

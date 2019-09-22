@@ -10,7 +10,6 @@ namespace ACNADailyPrayer
         public App()
         {
             InitializeComponent();
-
             //MainPage = new MainPage();
             MainPage = new NavigationPage( new MainPage() );
         }
@@ -23,6 +22,7 @@ namespace ACNADailyPrayer
         protected override void OnSleep()
         {
             // Handle when your app sleeps
+            GC.Collect();
         }
 
         protected override void OnResume()

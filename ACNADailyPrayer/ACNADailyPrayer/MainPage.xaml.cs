@@ -56,28 +56,57 @@ namespace ACNADailyPrayer
         }
 
 
-        void MorningPrayer_Clicked(object sender, System.EventArgs e)
+        async void MorningPrayer_Clicked(object sender, System.EventArgs e)
         {
+            loadingIndicator.IsRunning = true;
+            this.IsEnabled = false;
+
             try
             {
-                Navigation.PushAsync(new Page1(new Service(Service.Office.MorningPrayer, getDate())));
+                Page1 servicePage = null;
+                await Task.Run(() =>
+                {
+                    servicePage = new Page1(new Service(Service.Office.MorningPrayer, getDate()));
+                });
+                await Navigation.PushAsync(servicePage);
+
             }
             catch(Exception ex)
             {
-                Navigation.PopAsync();
-                DisplayAlert("ERROR", ex.Message + "\n\n" + "Unable to load service - please check your Internet Connection", "OK");
+               await Navigation.PopAsync();
+               await DisplayAlert("ERROR", ex.Message + "\n\n" + "Unable to load service - please check your Internet Connection", "OK");
+            }
+            finally
+            {
+                this.IsEnabled = true;
+                loadingIndicator.IsRunning = false;
             }
         }
-        void EveningPrayer_Clicked(object sender, System.EventArgs e)
+
+        async void EveningPrayer_Clicked(object sender, System.EventArgs e)
         {
+            loadingIndicator.IsRunning = true;
+            this.IsEnabled = false;
+            
             try
             {
-                Navigation.PushAsync(new Page1(new Service(Service.Office.EveningPrayer, getDate())));
+                Page1 servicePage = null;
+                await Task.Run(() =>
+               {
+                   servicePage = new Page1(new Service(Service.Office.EveningPrayer, getDate()));
+               });
+                await Navigation.PushAsync(servicePage);
             }
             catch (Exception ex)
             {
-                Navigation.PopAsync();
-                DisplayAlert("ERROR", ex.Message + "\n\n" + "Unable to load service - please check your Internet Connection", "OK");
+                await Navigation.PopAsync();
+
+                await DisplayAlert("ERROR", ex.Message + "\n\n" + "Unable to load service - please check your Internet Connection", "OK");
+            }
+            finally
+            {
+                this.IsEnabled = true;
+                loadingIndicator.IsRunning = false;
             }
         }
         void DateSelected(object sender, DateChangedEventArgs e)
