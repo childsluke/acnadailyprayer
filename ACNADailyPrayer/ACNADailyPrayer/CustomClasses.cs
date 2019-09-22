@@ -40,15 +40,28 @@ namespace ACNADailyPrayer
         public static string apiKey = "fc3f492dd3431c10bacd0386ed01964cb769025a";
         public static string endPointURL = "https://api.esv.org/v3/passage/text/?";
 
-        public static string GetReading(string inputReading)
+        public static string GetReading(string inputReading, bool subPassage = false)
         {
+            string readingToParse = inputReading;
+            string[] references = {""};
+            bool incCopyright = true;
 
             try
             {
+                // Multi-chapter references are separated by semicolon
+                if (inputReading.Contains(";"))
+                {
+                    references = inputReading.Split(';');
+                    readingToParse = references[0];
+                    incCopyright = false;
+                }
+
+
                 HttpClient client = new HttpClient();
                 client.Timeout = new System.TimeSpan(0, 0, 10); // 10-second timeout
-                client.BaseAddress = new Uri(ACNADailyPrayer.Service.endPointURL + "include-footnotes=false" + "&" + "include-verse-numbers=false" + "&" + "include-passage-references=true"
-                                            + "&" + "include-headings=false" + "&" + "q=" + inputReading);
+                client.BaseAddress = new Uri(ACNADailyPrayer.Service.endPointURL + "include-footnotes=false" + "&" + "include-verse-numbers=false" + "&" + "include-passage-references=false"
+                                                                                  + "&" + "include-short-copyright=" + incCopyright.ToString() 
+                                                                                  + "&" + "include-headings=false" + "&" + "q=" + readingToParse);
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue
 
                 ("Token", ACNADailyPrayer.Service.apiKey);
@@ -57,7 +70,12 @@ namespace ACNADailyPrayer
                 JObject parser = JObject.Parse(requestJSON);
                 JToken token = parser.SelectToken("$.passages[0]");
 
-                return token.ToString().Trim();
+                if (inputReading.Contains(";"))
+                    return inputReading + "\n" + token.ToString().Trim() + GetReading(references[1], true);
+                else if (subPassage)
+                    return "\n" + token.ToString().Trim();
+                else
+                    return inputReading + "\n" + token.ToString().Trim();
             }
             catch(Exception ex)
             {
