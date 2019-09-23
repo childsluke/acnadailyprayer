@@ -6,24 +6,15 @@
              mc:Ignorable="d"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
              ios:Page.UseSafeArea="true"
-             x:Class="ACNADailyPrayer.Page1">
+             x:Class="ACNADailyPrayer.Page1"
+             xmlns:local="clr-namespace:ACNADailyPrayer;assembly=ACNADailyPrayer">
+
     <ContentPage.Content>
-        <StackLayout>
-            <ScrollView>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.1*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.8*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                   
-            <Label x:Name="serviceTextLabel" 
-                FormattedText="{Binding .}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand"
-                  Grid.Column="1"/>
-                </Grid>
-            </ScrollView>
-        </StackLayout>
+        <ScrollView x:Name="scrollView">
+            <StackLayout x:Name="stackLayout">
+
+  
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

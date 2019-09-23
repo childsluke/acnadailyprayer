@@ -39,6 +39,7 @@
     <MandroidI18n />
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AndroidSupportedAbis />
+    <AndroidUseAapt2>false</AndroidUseAapt2>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
