@@ -18,7 +18,7 @@ namespace ACNADailyPrayer
         {
             InitializeComponent();
             //serviceTextLabel.FormattedText = new FormattedString();
-            stackLayout.Padding = new Thickness(this.Width * 0.05, 0, this.Width * 0.05, 0);
+            stackLayout.Padding = new Thickness(this.Width * 0.1, this.Height * 0.05, this.Width * 0.075, this.Height * 0.05);
             int i = 0;
 
             foreach(string s in servicePushed.serviceText)
@@ -50,7 +50,7 @@ namespace ACNADailyPrayer
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height); //must be called
-            stackLayout.Padding = new Thickness(this.Width * 0.05, 0, this.Width * 0.05, 0);
+            stackLayout.Padding = new Thickness(this.Width * 0.1, this.Height * 0.05, this.Width * 0.075, this.Height * 0.05);
         }
 
     }
