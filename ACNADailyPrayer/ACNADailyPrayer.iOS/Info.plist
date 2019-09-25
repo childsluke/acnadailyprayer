@@ -36,5 +36,10 @@
 	<string>1.0</string>
 	<key>UIMainStoryboardFile</key>
 	<string>LaunchScreen</string>
+  <key>UIAppFonts</key>
+  <array>
+    <string>CormorantGaramond-Regular.ttf</string>
+    <string>CormorantGaramond-Bold.ttf</string>
+  </array>
 </dict>
 </plist>

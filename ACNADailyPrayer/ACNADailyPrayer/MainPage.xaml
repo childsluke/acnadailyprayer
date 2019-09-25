@@ -45,11 +45,26 @@
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand"
                TextColor="Black"
-               FontFamily="CormorantGaramond-Bold.ttf#Cormorant Garamond"
                FontSize="40"
                    Grid.Column="1"
-               Grid.Row="0"/>
-            <Label Grid.Column="1" Grid.Row="1" FontSize="35" Text="Choose a date:" HorizontalTextAlignment="Center" TextColor="Black" FontFamily="CormorantGaramond.ttf#Cormorant Garamond"></Label>
+               Grid.Row="0">
+                <Label.FontFamily>
+                    <OnPlatform x:TypeArguments="x:String">
+                        <On Platform="iOS" Value="Cormorant Garamond"></On>
+                        <On Platform="Android" Value="CormorantGaramond-Bold.ttf#Cormorant Garamond"></On>
+                    </OnPlatform>
+                </Label.FontFamily>
+            </Label>
+            
+            <Label Grid.Column="1" Grid.Row="1" FontSize="35" Text="Choose a date:" HorizontalTextAlignment="Center" TextColor="Black">
+                <Label.FontFamily>
+                    <OnPlatform x:TypeArguments="x:String">
+                        <On Platform="iOS" Value="Cormorant Garamond - Regular"></On>
+                        <On Platform="Android" Value="CormorantGaramond-Regular.ttf#Cormorant Garamond - Regular"></On>
+                    </OnPlatform>
+                </Label.FontFamily>
+
+            </Label>
             <DatePicker Grid.Column="1" Grid.Row="2" MinimumDate="01/01/2000" TextColor="Black"
                     MaximumDate="12/31/2099"
                     DateSelected="DateSelected"
@@ -63,12 +78,28 @@
                 <ColumnDefinition Width="0.5*"></ColumnDefinition>
                 <ColumnDefinition Width="0.0*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
+
 
             <Button Grid.Column ="1"
-                Text="Morning Prayer" FontSize="Medium" Clicked="MorningPrayer_Clicked" CornerRadius="45" HorizontalOptions="Center" FontFamily="CormorantGaramond-Bold.ttf#Cormorant Garamond"/>
+                Text="Morning Prayer" FontSize="Medium" Clicked="MorningPrayer_Clicked" CornerRadius="45" HorizontalOptions="Center">
+                <Button.FontFamily>
+                    <OnPlatform x:TypeArguments="x:String">
+                        <On Platform="iOS" Value="Cormorant Garamond - Regular"></On>
+                        <On Platform="Android" Value="CormorantGaramond-Regular.ttf#Cormorant Garamond - Regular"></On>
+                    </OnPlatform>
+                </Button.FontFamily>
+            </Button>
+
             <Button Grid.Column ="2"
-                Text="Evening Prayer" FontSize="Medium" Clicked="EveningPrayer_Clicked" CornerRadius="45" HorizontalOptions="Center" FontFamily="CormorantGaramond-Bold.ttf#Cormorant Garamond" />
+                Text="Evening Prayer" FontSize="Medium" Clicked="EveningPrayer_Clicked" CornerRadius="45" HorizontalOptions="Center">
+                <Button.FontFamily>
+                    <OnPlatform x:TypeArguments="x:String">
+                        <On Platform="iOS" Value="Cormorant Garamond - Regular"></On>
+                        <On Platform="Android" Value="CormorantGaramond-Regular.ttf#Cormorant Garamond - Regular"></On>
+                    </OnPlatform>
+                </Button.FontFamily>
+            </Button>
+            
         </Grid>
 
         <ActivityIndicator x:Name="loadingIndicator" Color="Red" IsRunning="False"></ActivityIndicator>

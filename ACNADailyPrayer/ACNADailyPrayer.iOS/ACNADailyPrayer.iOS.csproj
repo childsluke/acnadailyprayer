@@ -79,6 +79,8 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <BundleResource Include="Resources\CormorantGaramond-Bold.ttf" />
+    <BundleResource Include="Resources\CormorantGaramond-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -147,4 +149,5 @@
       <Name>ACNADailyPrayer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
 </Project>
