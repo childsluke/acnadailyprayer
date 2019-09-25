@@ -43,6 +43,7 @@ namespace ACNADailyPrayer
         public MainPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         string getDate()

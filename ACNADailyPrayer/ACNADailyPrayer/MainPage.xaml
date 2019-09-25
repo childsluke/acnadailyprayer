@@ -8,14 +8,14 @@
              mc:Ignorable="d"
              x:Class="ACNADailyPrayer.MainPage"
             xmlns:local="clr-namespace:ACNADailyPrayer;assembly=ACNADailyPrayer"
+             BackgroundImageSource="{local:ImageResource ACNADailyPrayer.mainbg.jpg}"
 >
-    
 
+
+   
     <NavigationPage.TitleView>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="ACNA Daily Prayer" FontSize="Title" TextColor="White" HorizontalTextAlignment="Center"></Label>
-            </StackLayout>
-        </NavigationPage.TitleView>
+        <Label Text="ACNA Daily Prayer" FontSize="Title" TextColor="White" HorizontalOptions="Center"></Label>
+    </NavigationPage.TitleView>
 
     <StackLayout>
         <!-- Place new controls here -->
@@ -37,29 +37,38 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.33*"></RowDefinition>
-                <RowDefinition Height="0.33*"></RowDefinition>
-                <RowDefinition Height="0.33*"></RowDefinition>
+                <RowDefinition Height="0.43*"></RowDefinition>
+                <RowDefinition Height="0.23*"></RowDefinition>
+                <RowDefinition Height="0.01*"></RowDefinition>
             </Grid.RowDefinitions>
             <Label Text="Daily Prayer" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand"
                TextColor="Black"
+               FontFamily="CormorantGaramond-Bold.ttf#Cormorant Garamond"
                FontSize="40"
                    Grid.Column="1"
                Grid.Row="0"/>
-            <Label Grid.Column="1" Grid.Row="1" FontSize="40" Text="Choose a date:" HorizontalTextAlignment="Center"></Label>
-            <DatePicker Grid.Column="1" Grid.Row="2" MinimumDate="01/01/2000"
+            <Label Grid.Column="1" Grid.Row="1" FontSize="35" Text="Choose a date:" HorizontalTextAlignment="Center" TextColor="Black" FontFamily="CormorantGaramond.ttf#Cormorant Garamond"></Label>
+            <DatePicker Grid.Column="1" Grid.Row="2" MinimumDate="01/01/2000" TextColor="Black"
                     MaximumDate="12/31/2099"
                     DateSelected="DateSelected"
                         HorizontalOptions="Center"></DatePicker>
         </Grid>
 
-        <Grid HorizontalOptions="End">
+        <Grid VerticalOptions="End">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.0*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition Width="0.0*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
 
-            <Button Grid.Column ="0"
-                Text="Morning Prayer" FontSize="Medium" Clicked="MorningPrayer_Clicked" />
             <Button Grid.Column ="1"
-                Text="Evening Prayer" FontSize="Medium" Clicked="EveningPrayer_Clicked" />
+                Text="Morning Prayer" FontSize="Medium" Clicked="MorningPrayer_Clicked" CornerRadius="45" HorizontalOptions="Center" FontFamily="CormorantGaramond-Bold.ttf#Cormorant Garamond"/>
+            <Button Grid.Column ="2"
+                Text="Evening Prayer" FontSize="Medium" Clicked="EveningPrayer_Clicked" CornerRadius="45" HorizontalOptions="Center" FontFamily="CormorantGaramond-Bold.ttf#Cormorant Garamond" />
         </Grid>
 
         <ActivityIndicator x:Name="loadingIndicator" Color="Red" IsRunning="False"></ActivityIndicator>

@@ -12,6 +12,7 @@
   <ItemGroup>
     <None Remove="acna-header-logo" />
     <None Remove="acna-header-logo.png" />
+    <None Remove="CormorantGaramond.ttf" />
     <None Remove="lectionary\2019bcppsalter" />
     <None Remove="lectionary\April_lectionary" />
     <None Remove="lectionary\August_lectionary" />
@@ -28,6 +29,8 @@
     <None Remove="lectionary\October_lectionary" />
     <None Remove="lectionary\psalmcycletabdelim" />
     <None Remove="lectionary\September_lectionary" />
+    <None Remove="mainbg.jpg" />
+    <None Remove="servicetextbg.jpg" />
     <None Remove="servicetexts\apostlescreed" />
     <None Remove="servicetexts\benedictus" />
     <None Remove="servicetexts\collectforaidagainstperils" />
@@ -67,6 +70,10 @@
     <EmbeddedResource Include="lectionary\October_lectionary" />
     <EmbeddedResource Include="lectionary\psalmcycletabdelim" />
     <EmbeddedResource Include="lectionary\September_lectionary" />
+    <EmbeddedResource Include="mainbg.jpg" />
+    <EmbeddedResource Include="servicetextbg.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="servicetexts\apostlescreed" />
     <EmbeddedResource Include="servicetexts\benedictus" />
     <EmbeddedResource Include="servicetexts\collectforaidagainstperils" />

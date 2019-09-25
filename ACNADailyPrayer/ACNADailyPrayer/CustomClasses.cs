@@ -907,7 +907,6 @@ namespace ACNADailyPrayer
             else if (serviceType == Office.EveningPrayer)
             {
                 serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.magnificat"));
-                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.doxology"));
             }
 
             if ((date.readings[1] != "") && (serviceType != Office.Compline))
