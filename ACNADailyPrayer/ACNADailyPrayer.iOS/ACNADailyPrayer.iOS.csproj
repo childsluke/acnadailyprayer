@@ -32,6 +32,7 @@
     <CodesignResourceRules />
     <CodesignEntitlements />
     <OptimizePNGs>true</OptimizePNGs>
+    <IOSDebugOverWiFi>true</IOSDebugOverWiFi>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>

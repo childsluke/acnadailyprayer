@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACNADailyPrayer.iOS", "ACNA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACNADailyPrayer", "ACNADailyPrayer\ACNADailyPrayer\ACNADailyPrayer.csproj", "{67009690-1D15-4DD2-94A3-BBB54B28EFDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACNADailyPrayer.ConsoleUnitTesting", "ConsoleUnitTesting\ACNADailyPrayer.ConsoleUnitTesting.csproj", "{DFA7B41E-CFB1-4475-ACAA-A9BCD8306D30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACNADailyPrayer.ConsoleUnitTesting", "ConsoleUnitTesting\ACNADailyPrayer.ConsoleUnitTesting.csproj", "{DFA7B41E-CFB1-4475-ACAA-A9BCD8306D30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

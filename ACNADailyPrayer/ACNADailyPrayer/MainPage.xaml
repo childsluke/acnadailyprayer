@@ -65,7 +65,7 @@
                 </Label.FontFamily>
 
             </Label>
-            <DatePicker Grid.Column="1" Grid.Row="2" MinimumDate="01/01/2000" TextColor="Black"
+            <DatePicker Grid.Column="1" Grid.Row="2" MinimumDate="01/01/2000" TextColor="Black" BackgroundColor="Transparent"
                     MaximumDate="12/31/2099"
                     DateSelected="DateSelected"
                         HorizontalOptions="Center"></DatePicker>
@@ -81,21 +81,21 @@
 
 
             <Button Grid.Column ="1"
-                Text="Morning Prayer" FontSize="Medium" Clicked="MorningPrayer_Clicked" CornerRadius="45" HorizontalOptions="Center">
+                Text="Morning Prayer" FontSize="Large" Clicked="MorningPrayer_Clicked" CornerRadius="45" HorizontalOptions="Center">
                 <Button.FontFamily>
                     <OnPlatform x:TypeArguments="x:String">
-                        <On Platform="iOS" Value="Cormorant Garamond - Regular"></On>
-                        <On Platform="Android" Value="CormorantGaramond-Regular.ttf#Cormorant Garamond - Regular"></On>
+                        <On Platform="iOS" Value="Cormorant Garamond"></On>
+                        <On Platform="Android" Value="CormorantGaramond-Bold.ttf#Cormorant Garamond"></On>
                     </OnPlatform>
                 </Button.FontFamily>
             </Button>
 
             <Button Grid.Column ="2"
-                Text="Evening Prayer" FontSize="Medium" Clicked="EveningPrayer_Clicked" CornerRadius="45" HorizontalOptions="Center">
+                Text="Evening Prayer" FontSize="Large" Clicked="EveningPrayer_Clicked" CornerRadius="45" HorizontalOptions="Center">
                 <Button.FontFamily>
                     <OnPlatform x:TypeArguments="x:String">
-                        <On Platform="iOS" Value="Cormorant Garamond - Regular"></On>
-                        <On Platform="Android" Value="CormorantGaramond-Regular.ttf#Cormorant Garamond - Regular"></On>
+                        <On Platform="iOS" Value="Cormorant Garamond"></On>
+                        <On Platform="Android" Value="CormorantGaramond-Bold.ttf#Cormorant Garamond"></On>
                     </OnPlatform>
                 </Button.FontFamily>
             </Button>

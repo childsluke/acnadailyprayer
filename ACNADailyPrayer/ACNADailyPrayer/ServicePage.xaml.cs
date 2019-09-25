@@ -75,7 +75,7 @@ namespace ACNADailyPrayer
 
         private void OnSwiped(object sender, SwipedEventArgs e)
         {
-            throw new NotImplementedException();
+            Navigation.PopAsync();
         }
 
         protected override void OnSizeAllocated(double width, double height)
