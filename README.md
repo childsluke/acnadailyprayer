@@ -1,6 +1,6 @@
 # acnadailyprayer
 
-ACNA Daily Prayer App
+ACNA Daily Prayer App for Android and iOS devices
 
 - Created using C#/Xamarin Forms
 - Currently displays Morning and Evening Prayer according the Book of Common Prayer 2019 of the Anglican Church of North America
