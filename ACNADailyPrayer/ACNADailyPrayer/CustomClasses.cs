@@ -37,10 +37,21 @@ namespace ACNADailyPrayer
     public class Service
     {
 
-        public static string apiKey = "fc3f492dd3431c10bacd0386ed01964cb769025a";
+        public static string apiKey = "";
         public static string endPointURL = "https://api.esv.org/v3/passage/text/?";
 
-        public static string GetReading(string inputReading, bool subPassage = false)
+        private static string getApiKey()
+        {
+            var assembly_ = typeof(App).GetTypeInfo().Assembly;
+            Stream stream_ = assembly_.GetManifestResourceStream(@"ACNADailyPrayer.apikey");
+            StreamReader sReader_ = new StreamReader(stream_);
+
+            string _apiKey = sReader_.ReadLine();
+
+            return _apiKey;
+        }
+
+        private static string GetReading(string inputReading, bool subPassage = false)
         {
             string readingToParse = inputReading;
             string[] references = {""};
@@ -64,7 +75,7 @@ namespace ACNADailyPrayer
                                                                                   + "&" + "include-headings=false" + "&" + "q=" + readingToParse);
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue
 
-                ("Token", ACNADailyPrayer.Service.apiKey);
+                ("Token", Service.getApiKey());
 
                 string requestJSON = client.GetStringAsync(client.BaseAddress).Result;
                 JObject parser = JObject.Parse(requestJSON);
@@ -83,7 +94,7 @@ namespace ACNADailyPrayer
             }
 
         }
-        public static string ReadServiceElementFromFile(string filePath)
+        private static string ReadServiceElementFromFile(string filePath)
         {
             string readString = "";
 

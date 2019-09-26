@@ -12,6 +12,7 @@
   <ItemGroup>
     <None Remove="acna-header-logo" />
     <None Remove="acna-header-logo.png" />
+    <None Remove="apikey" />
     <None Remove="CormorantGaramond.ttf" />
     <None Remove="CormorantGaramondBackup.ttf" />
     <None Remove="lectionary\2019bcppsalter" />
@@ -56,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="acna-header-logo.png" />
+    <EmbeddedResource Include="apikey" />
     <EmbeddedResource Include="lectionary\2019bcppsalter" />
     <EmbeddedResource Include="lectionary\April_lectionary" />
     <EmbeddedResource Include="lectionary\August_lectionary" />
