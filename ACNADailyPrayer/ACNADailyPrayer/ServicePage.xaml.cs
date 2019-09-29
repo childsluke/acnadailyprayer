@@ -18,7 +18,7 @@ namespace ACNADailyPrayer
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            var swipeBack = new SwipeGestureRecognizer { Direction = SwipeDirection.Left };
+            var swipeBack = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
             swipeBack.Swiped += OnSwiped;
             scrollView.GestureRecognizers.Add(swipeBack);
 
