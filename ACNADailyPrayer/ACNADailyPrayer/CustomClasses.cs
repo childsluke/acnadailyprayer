@@ -780,6 +780,7 @@ namespace ACNADailyPrayer
                 return;
             }
 
+            return;   // Should NOT ever reach here!
         }
 
         private void getDailyCollect(string chosenCollect)
@@ -838,9 +839,9 @@ namespace ACNADailyPrayer
                         // If months don't match, we have to do some arithmetic...
                         else
                         {
-                            DateTime currentLineDateTime1 = DateTime.Parse(currentLineMonth1 + " " + currentLineDate1.ToString());
-                            DateTime currentLineDateTime2 = DateTime.Parse(currentLineMonth2 + " " + currentLineDate2.ToString());
-                            DateTime chosenCollectDateTime = DateTime.Parse(chosenCollectMonth + " " + chosenCollectDate.ToString());
+                            DateTime currentLineDateTime1 = DateTime.Parse(currentLineMonth1 + " " + currentLineDate1.ToString() + " " + DateTime.Today.Year.ToString() );
+                            DateTime currentLineDateTime2 = DateTime.Parse(currentLineMonth2 + " " + currentLineDate2.ToString() + " " + DateTime.Today.Year.ToString());
+                            DateTime chosenCollectDateTime = DateTime.Parse(chosenCollectMonth + " " + chosenCollectDate.ToString() + " " + DateTime.Today.Year.ToString());
                             
                             // If our collect date is NOT between the two line dates, continue to the next cycle
                             if (! ( (chosenCollectDateTime >= currentLineDateTime1) && (chosenCollectDateTime <= currentLineDateTime2) ) )
@@ -935,8 +936,9 @@ namespace ACNADailyPrayer
 
             serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.kyrieourfathersuffrages"));
 
-            // TODO: IMPLEMENT COLLECT READING IN FROM FILES AND DECIPHERING CORRECT ONE FOR DAY BASED ON DATE
-            foreach (string collectOfTheDay in collectsOfTheDay) serviceText.Add(collectOfTheDay);
+            //foreach (string collectOfTheDay in collectsOfTheDay) serviceText.Add(collectOfTheDay); // NOT SUPPORTED!
+
+            for (int i = 0; i < collectsOfTheDay.Count; i++) serviceText.Add(collectsOfTheDay[i]);
 
             if (serviceType == Office.MorningPrayer)
             {
