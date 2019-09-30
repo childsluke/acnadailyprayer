@@ -11,6 +11,5 @@ v1.5 alpha is reading for user testing and includes all basic functionality
 Subsequent versions to include:
 
 - An intercessions list 'sub-app'
-- Choice of Bible translation
-- Choice of Psalm translation (ie either BCP 2019 Psalter or ESV)
+- More prayer variations (such as the daily variation of Morning/Evening collects through the week)
 - More services (such as Night Prayer/Compline)
