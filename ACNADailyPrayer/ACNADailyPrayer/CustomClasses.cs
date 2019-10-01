@@ -936,26 +936,26 @@ namespace ACNADailyPrayer
 
             serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.kyrieourfathersuffrages"));
 
-            //foreach (string collectOfTheDay in collectsOfTheDay) serviceText.Add(collectOfTheDay); // NOT SUPPORTED!
+            foreach (string collectOfTheDay in collectsOfTheDay) serviceText.Add(collectOfTheDay);
 
-            for (int i = 0; i < collectsOfTheDay.Count; i++) serviceText.Add(collectsOfTheDay[i]);
 
             if (serviceType == Office.MorningPrayer)
             {
-                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforpeacemorning"));
-                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforgrace"));
+                //serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforpeacemorning"));
+                //serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforgrace"));
 
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts." + date.weekday.ToLower() + "morning"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.morningprayerformission"+ new Random().Next(1,3)));
 
             }
             else if (serviceType == Office.EveningPrayer)
             {
-                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforpeaceevening"));
-                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforaidagainstperils"));
+                //serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforpeaceevening"));
+                //serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.collectforaidagainstperils"));
 
-
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts." + date.weekday.ToLower() + "evening"));
+                serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.eveningprayerformission" + new Random().Next(1, 3)));
             }
-
-            serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.prayerformission"));
 
 
             serviceText.Add(ReadServiceElementFromFile(@"ACNADailyPrayer.servicetexts.generalthanksgiving"));
