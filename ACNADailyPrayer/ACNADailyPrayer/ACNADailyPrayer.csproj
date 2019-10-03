@@ -55,6 +55,7 @@
     <None Remove="servicetexts\kyrieourfathersuffrages" />
     <None Remove="servicetexts\legaltext" />
     <None Remove="servicetexts\magnificat" />
+    <None Remove="servicetexts\middaynightinvitatory" />
     <None Remove="servicetexts\mondayevening" />
     <None Remove="servicetexts\mondaymorning" />
     <None Remove="servicetexts\morningprayerformission1" />
@@ -119,6 +120,7 @@
     <EmbeddedResource Include="servicetexts\kyrieourfathersuffrages" />
     <EmbeddedResource Include="servicetexts\legaltext" />
     <EmbeddedResource Include="servicetexts\magnificat" />
+    <EmbeddedResource Include="servicetexts\middaynightinvitatory" />
     <EmbeddedResource Include="servicetexts\mondayevening" />
     <EmbeddedResource Include="servicetexts\mondaymorning" />
     <EmbeddedResource Include="servicetexts\morningprayerformission1" />
