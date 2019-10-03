@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Components
+
+@page "/acnadailyprayer"
+
+@inject NavigationManager navManager
+
+<h3>ACNA Daily Prayer</h3>
+
+<h4> Choose a Date: </h4>
+
+<input type="date" @bind-value="dateInput" />
+
+
+<button @onclick="mpStart">Morning Prayer</button>
+<button @onclick="epStart">Evening Prayer</button>
+
+@code {
+
+    Service.Office officeToSetup;
+    DateTime dateInput;
+    string dateToSend;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        dateInput = DateTime.Today;
+    }
+
+    private string prepDateFromInput()
+    {
+        return dateInput.DayOfWeek.ToString() + " " + dateInput.ToString("MMMM") + " " + dateInput.Day.ToString() + " " + dateInput.Year.ToString();
+    }
+
+    private void mpStart()
+    {
+        dateToSend = prepDateFromInput();
+        navManager.NavigateTo("/acnadailyprayer/service/" + "MorningPrayer" + "/" + dateToSend);
+    }
+    private void epStart()
+    {
+        dateToSend = prepDateFromInput();
+        navManager.NavigateTo("/acnadailyprayer/service/" + "EveningPrayer" + "/" + dateToSend);
+    }
+}

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACNADailyPrayer", "ACNADail
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACNADailyPrayer.ConsoleUnitTesting", "ConsoleUnitTesting\ACNADailyPrayer.ConsoleUnitTesting.csproj", "{DFA7B41E-CFB1-4475-ACAA-A9BCD8306D30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACNADailyPrayer.BlazorApp", "ACNADailyPrayer.BlazorApp\ACNADailyPrayer.BlazorApp.csproj", "{916768BC-76BD-4494-BF23-301AF0EC75FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,18 @@ Global
 		{DFA7B41E-CFB1-4475-ACAA-A9BCD8306D30}.Release|iPhone.Build.0 = Release|Any CPU
 		{DFA7B41E-CFB1-4475-ACAA-A9BCD8306D30}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{DFA7B41E-CFB1-4475-ACAA-A9BCD8306D30}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Release|iPhone.Build.0 = Release|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{916768BC-76BD-4494-BF23-301AF0EC75FA}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

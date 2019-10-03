@@ -1,0 +1,68 @@
+﻿@page "/acnadailyprayer/service/{officeIn}/{dateIn}"
+
+<h3>@serviceTitle()</h3>
+
+@foreach (string serviceComponent in serviceToRender.serviceText)
+{
+    string[] lines = serviceComponent.Split('\n');
+    string firstLine = lines[0];
+    <p><strong>@lines[0]</strong></p>
+
+
+    if (lines.Length != 1)
+    {
+    <div class="content">
+        @for (int i = 1; i < lines.Length; i++)
+        {
+            <span>@lines[i]</span><br/>
+        }
+    </div>
+    }
+}
+
+@code {
+
+    Service serviceToRender;
+
+    [Parameter]
+    public string officeIn { get; set; }
+    [Parameter]
+    public string dateIn { get; set; }
+
+    protected string serviceTitle()
+    {
+        switch (officeIn)
+        {
+            case "MorningPrayer": return "Morning Prayer";
+            case "EveningPrayer": return "Evening Prayer";
+            case "MiddayPrayer": return "Midday Prayer";
+            case "NightPrayer": return "Night Prayer";
+
+            default: return "NONE";
+        }
+
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        // Test code
+        //serviceToRender = new Service(Service.Office.MorningPrayer, "Thursday October 3 2019");
+
+
+        switch (officeIn)
+        {
+            case "MorningPrayer": serviceToRender = new Service(Service.Office.MorningPrayer, dateIn); break;
+
+            case "EveningPrayer": serviceToRender = new Service(Service.Office.EveningPrayer, dateIn); break;
+
+            case "MiddayPrayer": serviceToRender = new Service(Service.Office.MiddayPrayer, dateIn); break;
+
+            case "NightPrayer": serviceToRender = new Service(Service.Office.NightPrayer, dateIn); break;
+
+            default: break;
+        }
+    }
+
+}
