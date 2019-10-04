@@ -35,11 +35,11 @@
     private void mpStart()
     {
         dateToSend = prepDateFromInput();
-        navManager.NavigateTo("/acnadailyprayer/service/" + "MorningPrayer" + "/" + dateToSend);
+        navManager.NavigateTo("./acnadailyprayer/service/" + "MorningPrayer" + "/" + dateToSend);
     }
     private void epStart()
     {
         dateToSend = prepDateFromInput();
-        navManager.NavigateTo("/acnadailyprayer/service/" + "EveningPrayer" + "/" + dateToSend);
+        navManager.NavigateTo("./acnadailyprayer/service/" + "EveningPrayer" + "/" + dateToSend);
     }
 }
