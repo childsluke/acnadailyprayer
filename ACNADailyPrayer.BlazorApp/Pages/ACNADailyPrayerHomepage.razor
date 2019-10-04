@@ -11,15 +11,16 @@
 <input type="date" @bind-value="dateInput" />
 
 
-<button @onclick="mpStart">Morning Prayer</button>
-<button @onclick="epStart">Evening Prayer</button>
+<button type="button" @onclick="mpStart">Morning Prayer</button>
+<button type="button" @onclick="epStart">Evening Prayer</button>
+
 
 @code {
 
     Service.Office officeToSetup;
     DateTime dateInput;
     string dateToSend;
-
+ 
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -35,11 +36,11 @@
     private void mpStart()
     {
         dateToSend = prepDateFromInput();
-        navManager.NavigateTo("./acnadailyprayer/service/" + "MorningPrayer" + "/" + dateToSend);
+        navManager.NavigateTo("/acnadailyprayer/service/" + "MorningPrayer" + "/" + dateToSend);
     }
     private void epStart()
     {
         dateToSend = prepDateFromInput();
-        navManager.NavigateTo("./acnadailyprayer/service/" + "EveningPrayer" + "/" + dateToSend);
+        navManager.NavigateTo("/acnadailyprayer/service/" + "EveningPrayer" + "/" + dateToSend);
     }
 }
