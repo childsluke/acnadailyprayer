@@ -1,12 +1,19 @@
 ﻿@page "/acnadailyprayer/service/{officeIn}/{dateIn}"
 
-<h3>@serviceTitle()</h3>
+    <head>
+        <link href="css/ServiceStyle.css" type="text/css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet">
+
+        <title>ACNA Daily Prayer</title>
+    </head>
+
+<h3 class="serviceTitle">@serviceTitle()</h3>
 
 @foreach (string serviceComponent in serviceToRender.serviceText)
 {
     string[] lines = serviceComponent.Split('\n');
     string firstLine = lines[0];
-    <p><strong>@lines[0]</strong></p>
+    <p class="elementTitle"><strong>@lines[0]</strong></p>
 
 
     if (lines.Length != 1)
@@ -63,6 +70,8 @@
 
             default: break;
         }
+
+        serviceToRender.serviceText.RemoveAt(1);
     }
 
 }

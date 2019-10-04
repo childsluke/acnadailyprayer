@@ -1,0 +1,17 @@
+﻿.content {
+    color: #000000;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120%;
+}
+
+.serviceTitle {
+    text-align: center;
+    text-decoration: underline;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 140%;
+}
+
+.elementTitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 130%;
+}
