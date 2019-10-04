@@ -1,5 +1,16 @@
-﻿@page "/"
+﻿@using Microsoft.AspNetCore.Components
 
-<h1>Hello, world!</h1>
+@page "/"
 
-Welcome to your new app.
+@inject NavigationManager navManager
+
+<div>Redirecting...</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        
+        navManager.NavigateTo("./acnadailyprayer");
+    }
+}
