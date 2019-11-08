@@ -12,5 +12,6 @@ v1.5 alpha app is reading for user testing and includes all basic functionality
 Subsequent versions to include:
 
 - An intercessions list 'sub-app'
+- Apocryphal readings (currently unavailable via the ESV API)
 - More prayer variations (such as the daily variation of Morning/Evening collects through the week)
 - More services (such as Night Prayer/Compline)
