@@ -13,5 +13,4 @@ Subsequent versions to include:
 
 - An intercessions list 'sub-app'
 - Apocryphal readings (currently unavailable via the ESV API)
-- More prayer variations (such as the daily variation of Morning/Evening collects through the week)
 - More services (such as Night Prayer/Compline)
